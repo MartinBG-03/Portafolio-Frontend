@@ -1,0 +1,58 @@
+<section class="container pb-home-projects">
+  <div class="pb-home-projects__head">
+    <h2 class="pb-home-projects__title">{{ t().home.projects.heading }}</h2>
+    <pb-button pill link="/projects">
+      {{ t().home.projects.link }}
+      <app-icon name="arrow-down" class="pb-home-projects__arrow" />
+    </pb-button>
+  </div>
+
+  <div class="pb-home-projects__grid">
+    <article class="pb-home-projects__featured">
+      <div class="pb-home-projects__featured-text">
+        <p class="pb-home-projects__kind">
+          {{ featured().categoryLabel }} · {{ t().home.projects.featured }}
+        </p>
+        <h3 class="pb-home-projects__featured-title">
+          <a
+            class="pb-home-projects__link"
+            routerLink="/projects"
+            [queryParams]="{ category: featured().category }"
+          >
+            {{ featured().title }}
+          </a>
+        </h3>
+        <p class="pb-home-projects__description">{{ featured().description }}</p>
+        <pb-circle-arrow tone="accent" />
+      </div>
+
+      <div class="pb-home-projects__media" aria-hidden="true">
+        <span>{{ t().projects.imagePlaceholder }}</span>
+      </div>
+    </article>
+
+    <aside class="pb-home-projects__side">
+      <ul class="pb-home-projects__list">
+        @for (project of listed(); track project.id) {
+          <li class="pb-home-projects__item">
+            <p class="pb-home-projects__side-kind">{{ project.categoryLabel }}</p>
+            <h3 class="pb-home-projects__item-title">
+              <a
+                class="pb-home-projects__side-link"
+                routerLink="/projects"
+                [queryParams]="{ category: project.category }"
+              >
+                {{ project.title }}
+              </a>
+            </h3>
+          </li>
+        }
+      </ul>
+
+      <a class="pb-home-projects__all" routerLink="/projects">
+        {{ t().menus.projects.footer }}
+        <app-icon name="arrow-down" class="pb-home-projects__arrow" />
+      </a>
+    </aside>
+  </div>
+</section>

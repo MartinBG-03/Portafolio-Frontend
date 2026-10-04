@@ -1,0 +1,59 @@
+@if (current(); as item) {
+  <div class="pb-media-carousel">
+    <div class="pb-media-carousel__main">
+      <div class="pb-media-carousel__viewport">
+        @for (slide of items(); track slide.id; let i = $index) {
+          @let place = position(i);
+          <div
+            [class]="'pb-media-carousel__slide pb-media-carousel__slide--' + place"
+            [attr.aria-hidden]="place !== 'current'"
+            (click)="select(i)"
+          >
+            @if (place === 'current' && slide.kind === 'video') {
+              <pb-video-player [src]="slide.src" [poster]="slide.poster ?? null" [label]="slide.title" />
+            } @else {
+              <img
+                class="pb-media-carousel__image"
+                loading="lazy"
+                [src]="slide.kind === 'video' ? (slide.poster ?? '') : slide.src"
+                [alt]="place === 'current' ? slide.title : ''"
+              />
+            }
+
+            @if (place === 'current') {
+              <button
+                type="button"
+                class="pb-media-carousel__expand"
+                [attr.aria-label]="texts().expand"
+                (click)="expand(); $event.stopPropagation()"
+              >
+                <app-icon name="expand" />
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="pb-media-carousel__footer">
+        <pb-paginator [total]="items().length" [index]="index()" (indexChange)="index.set($event)" />
+      </div>
+    </div>
+
+    <div class="pb-media-carousel__caption" aria-live="polite">
+      <span class="pb-media-carousel__kind">
+        {{ item.kind === 'video' ? texts().video : texts().image }}
+      </span>
+      <h4 class="pb-media-carousel__title">{{ item.title }}</h4>
+      @if (item.body) {
+        <p class="pb-media-carousel__body">{{ item.body }}</p>
+      }
+    </div>
+  </div>
+
+  <pb-media-lightbox
+    [items]="items()"
+    [open]="lightboxOpen()"
+    (openChange)="onLightboxOpenChange($event)"
+    [(index)]="lightboxIndex"
+  />
+}

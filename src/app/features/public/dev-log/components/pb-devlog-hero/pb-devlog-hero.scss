@@ -1,0 +1,92 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.pb-devlog-hero {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  color: var(--color-on-media);
+  text-decoration: none;
+  @include focus-ring;
+}
+
+.pb-devlog-hero__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pb-devlog-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    color-mix(in srgb, var(--color-media-shade) 90%, transparent) 0%,
+    color-mix(in srgb, var(--color-media-shade) 40%, transparent) 55%,
+    transparent 100%
+  );
+}
+
+.pb-devlog-hero__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  padding: var(--space-6);
+
+  @include media-up(sm) {
+    padding: var(--space-8);
+  }
+}
+
+.pb-devlog-hero__badge {
+  display: inline-flex;
+  width: fit-content;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.pb-devlog-hero__title {
+  margin: 0;
+  max-width: 34rem;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  line-height: 1.25;
+
+  @include media-up(sm) {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+.pb-devlog-hero__description {
+  display: -webkit-box;
+  margin: 0;
+  max-width: 34rem;
+  overflow: hidden;
+  opacity: 0.85;
+  line-height: 1.5;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.pb-devlog-hero__date {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  opacity: 0.75;
+}

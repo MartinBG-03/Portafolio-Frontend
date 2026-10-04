@@ -1,0 +1,102 @@
+@use 'abstracts' as *;
+
+:host {
+  display: inline-flex;
+}
+
+.pb-language-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-pill);
+  transition: background-color 200ms ease;
+
+  &__trigger {
+    @include reset-button;
+    display: inline-flex;
+    padding: var(--space-2);
+    border-radius: 50%;
+    color: var(--color-text);
+    @include focus-ring;
+
+    &:hover {
+      background-color: var(--color-accent-soft);
+    }
+  }
+
+  &__badge {
+    position: absolute;
+    inset-block-end: calc(var(--space-1) * -1);
+    inset-inline-end: calc(var(--space-1) * -1);
+    padding-inline: var(--space-1);
+    border: var(--border-width-strong) solid var(--color-bg);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+    font-size: var(--font-size-2xs);
+    font-weight: var(--font-weight-extrabold);
+    line-height: 1.4;
+    pointer-events: none;
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease;
+  }
+
+  &__options {
+    display: grid;
+    grid-template-columns: 0fr;
+    padding-inline-end: 0;
+    transition:
+      grid-template-columns 200ms ease,
+      padding-inline-end 200ms ease;
+  }
+
+  &__group {
+    display: flex;
+    gap: var(--space-1);
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  &__button {
+    @include reset-button;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.05em;
+    @include focus-ring(-2px);
+
+    &:hover {
+      background-color: var(--color-accent-soft);
+    }
+
+    &.is-active {
+      background-color: var(--color-primary);
+      color: var(--color-on-primary);
+    }
+  }
+
+  &.is-open {
+    background-color: var(--color-card);
+
+    .pb-language-switch__options {
+      grid-template-columns: 1fr;
+      padding-inline-end: var(--space-1);
+    }
+
+    .pb-language-switch__badge {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pb-language-switch__options,
+  .pb-language-switch__badge {
+    transition: none;
+  }
+}

@@ -1,0 +1,56 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.ad-number-field {
+  &__box {
+    @include field-box;
+
+    padding-inline-end: var(--space-2);
+  }
+
+  &__control {
+    @include field-input;
+    appearance: textfield;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      appearance: none;
+      margin: 0;
+    }
+  }
+
+  &__step {
+    @include reset-button;
+    --icon-size: var(--space-4);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: calc(var(--space-6) + var(--space-1));
+    height: calc(var(--space-6) + var(--space-1));
+    border-radius: var(--radius);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    @include focus-ring;
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-tone-neutral);
+    }
+
+    &:disabled {
+      color: var(--color-disabled-text);
+      cursor: not-allowed;
+    }
+  }
+
+  &__minus {
+    display: block;
+    width: var(--space-3);
+    height: 1.5px;
+    background-color: currentColor;
+  }
+}

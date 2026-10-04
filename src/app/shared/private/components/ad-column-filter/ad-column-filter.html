@@ -1,0 +1,107 @@
+<ad-icon-button
+  class="ad-column-filter__trigger"
+  [class.is-active]="active()"
+  variant="ghost"
+  size="sm"
+  popup="dialog"
+  [label]="texts().open(column())"
+  [pressed]="active()"
+  [expanded]="open()"
+  (click)="toggle()"
+>
+  <ad-icon name="filter" />
+</ad-icon-button>
+
+@if (open()) {
+  <div
+    #panel
+    class="ad-column-filter__panel"
+    role="dialog"
+    [attr.aria-label]="texts().panel(column())"
+    [style.top.px]="position().top"
+    [style.left.px]="position().left"
+    (keydown.escape)="close(true)"
+  >
+    <ad-select
+      [label]="texts().matchMode"
+      labelHidden
+      [options]="matchModes()"
+      [ngModel]="matchMode()"
+      (ngModelChange)="setMatchMode($event)"
+    />
+
+    @for (rule of rules(); track rule.id) {
+      <div class="ad-column-filter__rule">
+        <ad-select
+          [label]="texts().operator"
+          labelHidden
+          [options]="operators()"
+          [ngModel]="rule.operator"
+          (ngModelChange)="setOperator(rule.id, $event)"
+        />
+
+        @switch (config().type) {
+          @case ('number') {
+            <ad-number-field
+              [label]="texts().value"
+              labelHidden
+              [placeholder]="texts().valuePlaceholder"
+              [ngModel]="numberOf(rule.value)"
+              (ngModelChange)="setValue(rule.id, $event)"
+            />
+          }
+          @case ('date') {
+            <ad-date-field
+              [label]="texts().value"
+              labelHidden
+              [ngModel]="rule.value || null"
+              (ngModelChange)="setValue(rule.id, $event)"
+            />
+          }
+          @case ('option') {
+            <ad-select
+              [label]="texts().value"
+              labelHidden
+              [placeholder]="texts().optionPlaceholder"
+              [options]="options()"
+              [ngModel]="rule.value"
+              (ngModelChange)="setValue(rule.id, $event)"
+            />
+          }
+          @default {
+            <ad-text-field
+              [label]="texts().value"
+              labelHidden
+              [placeholder]="texts().valuePlaceholder"
+              [ngModel]="rule.value"
+              (ngModelChange)="setValue(rule.id, $event)"
+            />
+          }
+        }
+
+        @if (rules().length > 1) {
+          <ad-button variant="tertiary" size="sm" (click)="removeRule(rule.id)">
+            <ad-icon name="trash" />
+            {{ texts().removeRule }}
+          </ad-button>
+        }
+      </div>
+    }
+
+    <ad-button
+      class="ad-column-filter__add"
+      variant="tertiary"
+      size="sm"
+      [disabled]="rules().length >= maxRules"
+      (click)="addRule()"
+    >
+      <ad-icon name="add" />
+      {{ texts().addRule }}
+    </ad-button>
+
+    <div class="ad-column-filter__footer">
+      <ad-button variant="secondary" size="sm" (click)="clear()">{{ texts().clear }}</ad-button>
+      <ad-button size="sm" (click)="apply()">{{ texts().apply }}</ad-button>
+    </div>
+  </div>
+}

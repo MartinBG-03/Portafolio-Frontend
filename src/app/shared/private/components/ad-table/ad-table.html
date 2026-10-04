@@ -1,0 +1,247 @@
+<div class="ad-table">
+  <ng-container
+    [ngTemplateOutlet]="level"
+    [ngTemplateOutletContext]="{ rows: rows(), depth: 0, parent: null, meta: null }"
+  />
+</div>
+
+<ng-template #level let-levelRows="rows" let-depth="depth" let-parent="parent" let-meta="meta">
+  <div class="ad-table__level">
+    @if (showToolbar()) {
+      <ad-table-toolbar
+        [searchable]="searchable()"
+        [configurable]="columnsConfigurable()"
+        [searchLabel]="depth === 0 ? searchText() : childSearchText()"
+        [placeholder]="depth === 0 ? searchText() : childSearchText()"
+        [value]="meta ? meta.search : search()"
+        (searchChange)="meta ? searchChildren(parent, meta, $event) : changeRootSearch($event)"
+        (configure)="columnsDialogOpen.set(true)"
+      >
+        @if (depth === 0 && filters().length > 0) {
+          <ad-button variant="secondary" (click)="clearFilters()">
+            <ad-icon name="filter" />
+            {{ clearFiltersText() }}
+          </ad-button>
+        }
+
+        @if (toolbarSlot(); as slot) {
+          <ng-container
+            [ngTemplateOutlet]="slot.template"
+            [ngTemplateOutletContext]="{ $implicit: parent, depth: depth }"
+          />
+        }
+      </ad-table-toolbar>
+    }
+
+    <div class="ad-table__scroll">
+      <table class="ad-table__table" [class.is-nested]="depth > 0">
+        <caption class="ad-table__caption">
+          {{
+            depth === 0 ? caption() : childCaptionText()
+          }}
+        </caption>
+
+        <thead>
+          <tr>
+            @if (hasRowActions()) {
+              <th scope="col" class="ad-table__menu">
+                <span class="ad-table__caption">{{ texts().actions }}</span>
+              </th>
+            }
+
+            @if (hierarchical()) {
+              <th scope="col" class="ad-table__expand">
+                <span class="ad-table__caption">{{ texts().expand }}</span>
+              </th>
+            }
+
+            @if (selectable() && depth === 0) {
+              <th scope="col" class="ad-table__select">
+                <ad-checkbox
+                  [label]="texts().selectAll"
+                  [checked]="allSelected()"
+                  [indeterminate]="someSelected()"
+                  (checkedChange)="toggleAll($event)"
+                />
+              </th>
+            }
+
+            @for (column of orderedColumns(); track column.key) {
+              <th
+                scope="col"
+                [class.is-end]="column.align === 'end'"
+                [style.width]="column.width"
+                [attr.aria-sort]="depth === 0 ? ariaSort(column) : null"
+              >
+                <span class="ad-table__head">
+                  @if (column.sortable && depth === 0) {
+                    <button type="button" class="ad-table__sort" (click)="toggleSort(column)">
+                      {{ column.header }}
+                      <ad-icon name="sort" />
+                    </button>
+                  } @else {
+                    {{ column.header }}
+                  }
+
+                  @if (column.filter && depth === 0) {
+                    <ad-column-filter
+                      [column]="column.header"
+                      [field]="filterField(column)"
+                      [config]="column.filter"
+                      [value]="filterOf(column)"
+                      (applied)="applyFilter(column, $event)"
+                    />
+                  }
+                </span>
+              </th>
+            }
+
+            @if (actionsSlot()) {
+              <th scope="col" class="ad-table__actions-head">
+                <span class="ad-table__caption">{{ texts().actions }}</span>
+              </th>
+            }
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (row of levelRows; track rowKey()(row); let index = $index) {
+            <tr [class.is-selected]="isSelected(row)">
+              @if (hasRowActions()) {
+                <td class="ad-table__menu">
+                  @let items = actionsOf(row);
+                  @if (items.length > 0) {
+                    <ad-menu
+                      [label]="rowActionsText()"
+                      [items]="items"
+                      (selected)="rowAction.emit({ row: row, key: $event, parent: parent })"
+                    />
+                  }
+                </td>
+              }
+
+              @if (hierarchical()) {
+                <td class="ad-table__expand">
+                  @if (isExpandable(row)) {
+                    <button
+                      type="button"
+                      class="ad-table__toggle"
+                      [attr.aria-expanded]="isExpanded(row)"
+                      [attr.aria-label]="isExpanded(row) ? texts().collapseRow : texts().expandRow"
+                      (click)="toggleExpanded(row)"
+                    >
+                      <ad-icon [name]="isExpanded(row) ? 'arrow-down' : 'arrow-right'" />
+                    </button>
+                  }
+                </td>
+              }
+
+              @if (selectable() && depth === 0) {
+                <td class="ad-table__select">
+                  <ad-checkbox
+                    [label]="texts().selectRow"
+                    [checked]="isSelected(row)"
+                    (checkedChange)="toggleRow(row, $event)"
+                  />
+                </td>
+              }
+
+              @for (column of orderedColumns(); track column.key) {
+                <td [class.is-end]="column.align === 'end'">
+                  @if (cellTemplate(column); as template) {
+                    <ng-container
+                      [ngTemplateOutlet]="template"
+                      [ngTemplateOutletContext]="{ $implicit: row, index: index }"
+                    />
+                  } @else {
+                    {{ display(row, column) }}
+                  }
+                </td>
+              }
+
+              @if (actionsSlot(); as slot) {
+                <td class="ad-table__actions">
+                  <ng-container
+                    [ngTemplateOutlet]="slot.template"
+                    [ngTemplateOutletContext]="{ $implicit: row, index: index }"
+                  />
+                </td>
+              }
+            </tr>
+
+            @if (isExpandable(row) && isExpanded(row)) {
+              <tr class="ad-table__children">
+                <td [attr.colspan]="columnCount(depth)">
+                  @if (childrenOf(row); as childLevel) {
+                    <ng-container
+                      [ngTemplateOutlet]="level"
+                      [ngTemplateOutletContext]="{
+                        rows: childLevel.rows,
+                        depth: depth + 1,
+                        parent: row,
+                        meta: childLevel,
+                      }"
+                    />
+                  } @else {
+                    <p class="ad-table__loading" role="status">{{ loadingMessage() }}</p>
+                  }
+                </td>
+              </tr>
+            }
+          } @empty {
+            <tr>
+              <td class="ad-table__empty" [attr.colspan]="columnCount(depth)">
+                {{ emptyMessage() }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (meta) {
+      <ad-pagination-bar
+        [label]="texts().paginationOf(childCaptionText())"
+        [page]="meta.page"
+        [pageSize]="meta.pageSize"
+        [totalRecords]="meta.totalRecords"
+        [pageSizeOptions]="pageSizeOptions()"
+        (paginationChange)="requestChildrenPage(parent, meta, $event)"
+      />
+    } @else {
+      <ad-pagination-bar
+        [label]="texts().paginationOf(caption())"
+        [page]="page()"
+        [pageSize]="pageSize()"
+        [totalRecords]="totalRecords()"
+        [pageSizeOptions]="pageSizeOptions()"
+        (paginationChange)="changeRootPagination($event)"
+      />
+    }
+  </div>
+</ng-template>
+
+@if (columnsConfigurable()) {
+  <ad-dialog
+    size="sm"
+    [heading]="texts().configureColumns"
+    [confirmLabel]="commonTexts().done"
+    cancelLabel=""
+    [(open)]="columnsDialogOpen"
+    (confirmed)="columnsDialogOpen.set(false)"
+  >
+    <p class="ad-table__columns-hint">
+      {{ texts().columnsHint }}
+    </p>
+    <ad-column-order [columns]="orderedColumns()" (orderChange)="columnOrder.set($event)" />
+
+    <ad-button
+      adDialogAction
+      variant="tertiary"
+      [disabled]="columnOrder().length === 0"
+      (click)="columnOrder.set([])"
+    >
+      {{ texts().resetOrder }}
+    </ad-button>
+  </ad-dialog>
+}

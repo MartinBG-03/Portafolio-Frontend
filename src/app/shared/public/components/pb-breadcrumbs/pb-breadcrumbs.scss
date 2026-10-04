@@ -1,0 +1,48 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.pb-breadcrumbs {
+  font-size: var(--font-size-sm);
+
+  &__list {
+    @include reset-list;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  &__link,
+  &__text {
+    color: var(--color-text-subtle);
+    text-decoration: none;
+  }
+
+  &__link {
+    @include focus-ring;
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+
+  &__text {
+    &.is-current {
+      color: var(--color-text);
+      font-weight: var(--font-weight-semibold);
+    }
+  }
+
+  &__separator {
+    color: var(--color-separator);
+  }
+}

@@ -1,0 +1,22 @@
+:root {
+  --gradient-media-web: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--palette-navy) 78%, var(--palette-gray)),
+    color-mix(in srgb, var(--palette-navy) 62%, black)
+  );
+  --gradient-media-mobile: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--palette-gray) 55%, var(--palette-navy)),
+    color-mix(in srgb, var(--palette-navy) 82%, black)
+  );
+  --gradient-media-automation: linear-gradient(
+    200deg,
+    color-mix(in srgb, var(--palette-accent) 42%, var(--palette-navy)),
+    color-mix(in srgb, var(--palette-navy) 80%, black)
+  );
+  --gradient-media-feature: var(--gradient-media-mobile);
+  --gradient-media-shade: linear-gradient(to top, var(--color-media-shade) 4%, transparent 62%);
+  --gradient-hero:
+    radial-gradient(60% 90% at 88% 10%, var(--color-media-glow), transparent 70%),
+    linear-gradient(120deg, var(--palette-navy), color-mix(in srgb, var(--palette-navy) 70%, black));
+}

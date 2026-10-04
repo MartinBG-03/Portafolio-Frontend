@@ -1,0 +1,54 @@
+<footer class="pb-footer" [attr.data-game-theme]="gameTheme()">
+  <div class="container pb-footer__top">
+    <a
+      class="pb-footer__brand"
+      routerLink="/"
+      [attr.aria-label]="siteName + ' - ' + t().nav.home"
+    >
+      <pb-logo />
+      <span class="pb-footer__brand-sep" aria-hidden="true">|</span>
+      <span class="pb-footer__brand-name">{{ siteName }}</span>
+    </a>
+
+    <div class="pb-footer__right">
+      <nav class="pb-footer__nav" [attr.aria-label]="t().nav.label">
+        @for (link of navLinks(); track link.path; let last = $last) {
+          <a class="pb-footer__link" [routerLink]="link.path">{{ link.label }}</a>
+          @if (!last) {
+            <span class="pb-footer__divider" aria-hidden="true">|</span>
+          }
+        }
+      </nav>
+
+      @if (socials().length > 0) {
+        <span class="pb-footer__divider" aria-hidden="true">|</span>
+
+        <div class="pb-footer__social">
+          @for (social of socials(); track social.href) {
+            <a
+              class="pb-footer__social-link"
+              [href]="social.href"
+              [target]="social.href.startsWith('mailto:') ? null : '_blank'"
+              [rel]="social.href.startsWith('mailto:') ? null : 'noopener'"
+              [attr.aria-label]="social.label"
+            >
+              <app-icon [name]="social.icon" />
+            </a>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  @if (gameVisible()) {
+    <div class="container pb-footer__hero">
+      <p class="pb-footer__headline">{{ headline() }}</p>
+      <pb-runner-game />
+      <p class="pb-footer__text">&copy; {{ year }} {{ siteName }} {{ t().footer.rights }}</p>
+    </div>
+  } @else {
+    <div class="container pb-footer__hero pb-footer__hero--compact">
+      <p class="pb-footer__text">&copy; {{ year }} {{ siteName }} {{ t().footer.rights }}</p>
+    </div>
+  }
+</footer>

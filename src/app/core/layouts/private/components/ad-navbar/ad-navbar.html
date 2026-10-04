@@ -1,0 +1,136 @@
+<header class="ad-navbar">
+  <div class="ad-navbar__bar">
+    <a class="ad-navbar__brand" routerLink="/admin/dashboard">
+      <img
+        class="ad-navbar__logo"
+        [src]="logo()"
+        [alt]="texts().navbar.brandAlt(siteName)"
+        width="830"
+        height="586"
+      />
+    </a>
+
+    <nav class="ad-navbar__nav" [attr.aria-label]="texts().navbar.navLabel">
+      @if (openModule(); as module) {
+        <div class="ad-navbar__expanded">
+          <span class="ad-navbar__expanded-icon" [adTooltip]="texts().nav[module.key]">
+            @if (module.icon; as icon) {
+              <ad-icon [name]="icon" />
+            } @else {
+              <span class="ad-navbar__glyph" aria-hidden="true">{{ texts().nav[module.key].charAt(0) }}</span>
+            }
+          </span>
+
+          <span class="ad-navbar__module-name">{{ texts().nav[module.key] }}</span>
+
+          @if (module.children?.length) {
+            <ul class="ad-navbar__children">
+              @for (child of module.children; track child.path) {
+                <li>
+                  <a
+                    class="ad-navbar__child-link"
+                    [attr.data-path]="child.path"
+                    [routerLink]="['/admin', module.path, child.path]"
+                    routerLinkActive="is-active"
+                    ariaCurrentWhenActive="page"
+                  >
+                    {{ texts().nav[child.key] }}
+                  </a>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+
+        <button type="button" class="ad-navbar__circle" [attr.aria-label]="texts().navbar.showAllModules" (click)="collapse()">
+          <ad-icon name="hamburger" />
+        </button>
+      } @else {
+        <ul class="ad-navbar__modules">
+          @for (module of modules(); track module.path) {
+            <li>
+              @if (module.children?.length) {
+                <button
+                  type="button"
+                  class="ad-navbar__circle ad-navbar__module"
+                  [class.is-active]="activePath() === module.path"
+                  [attr.data-path]="module.path"
+                  [adTooltip]="texts().nav[module.key]"
+                  (click)="expand(module.path)"
+                >
+                  @if (module.icon; as icon) {
+                    <ad-icon [name]="icon" />
+                  } @else {
+                    <span class="ad-navbar__glyph" aria-hidden="true">{{ texts().nav[module.key].charAt(0) }}</span>
+                  }
+                  <span class="ad-navbar__label">{{ texts().nav[module.key] }}</span>
+                </button>
+              } @else {
+                <a
+                  class="ad-navbar__circle ad-navbar__module"
+                  [routerLink]="['/admin', module.path]"
+                  routerLinkActive="is-active"
+                  ariaCurrentWhenActive="page"
+                  [attr.data-path]="module.path"
+                  [adTooltip]="texts().nav[module.key]"
+                  (click)="expand(module.path)"
+                >
+                  @if (module.icon; as icon) {
+                    <ad-icon [name]="icon" />
+                  } @else {
+                    <span class="ad-navbar__glyph" aria-hidden="true">{{ texts().nav[module.key].charAt(0) }}</span>
+                  }
+                  <span class="ad-navbar__label">{{ texts().nav[module.key] }}</span>
+                </a>
+              }
+            </li>
+          }
+        </ul>
+      }
+    </nav>
+
+    <span class="ad-navbar__divider" aria-hidden="true"></span>
+
+    <div class="ad-navbar__preferences">
+      <a
+        class="ad-navbar__home"
+        routerLink="/"
+        [adTooltip]="texts().navbar.viewSite"
+        [attr.aria-label]="texts().navbar.viewSite"
+      >
+        <ad-icon name="site-home" />
+      </a>
+      <pb-language-switch />
+      <pb-theme-toggle />
+    </div>
+  </div>
+
+  <div class="ad-navbar__profile">
+    <button
+      type="button"
+      class="ad-navbar__profile-trigger"
+      [attr.aria-expanded]="profileMenuOpen()"
+      aria-haspopup="menu"
+      (click)="toggleProfileMenu()"
+    >
+      <span class="ad-navbar__identity">
+        <span class="ad-navbar__name">{{ displayName() }}</span>
+        <span class="ad-navbar__role">{{ texts().navbar.profileRole }}</span>
+      </span>
+      @if (photo(); as photoUrl) {
+        <img class="ad-navbar__avatar" [src]="photoUrl" alt="" width="40" height="40" />
+      } @else {
+        <span class="ad-navbar__avatar ad-navbar__avatar--initials" aria-hidden="true">{{ initials() }}</span>
+      }
+    </button>
+
+    @if (profileMenuOpen()) {
+      <div class="ad-navbar__profile-menu" role="menu">
+        <button type="button" class="ad-navbar__profile-menu-item" role="menuitem" (click)="logout()">
+          <ad-icon name="logout" />
+          {{ texts().navbar.logout }}
+        </button>
+      </div>
+    }
+  </div>
+</header>

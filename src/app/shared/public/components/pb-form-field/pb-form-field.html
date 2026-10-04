@@ -1,0 +1,21 @@
+<div class="pb-form-field">
+  <label class="pb-form-field__label" [attr.for]="controlId()">
+    {{ label() }}
+    @if (required()) {
+      <span class="pb-form-field__required" aria-hidden="true">*</span>
+    }
+  </label>
+
+  <ng-content />
+
+  @if (error(); as message) {
+    <p
+      class="pb-form-field__message pb-form-field__message--error"
+      [id]="fieldMessageId(controlId(), 'error')"
+    >
+      {{ message }}
+    </p>
+  } @else if (hint(); as message) {
+    <p class="pb-form-field__message" [id]="fieldMessageId(controlId(), 'hint')">{{ message }}</p>
+  }
+</div>

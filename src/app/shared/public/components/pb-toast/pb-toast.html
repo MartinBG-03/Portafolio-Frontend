@@ -1,0 +1,22 @@
+<div [class]="'pb-toast pb-toast--' + variant()" [attr.role]="role()">
+  <app-icon class="pb-toast__icon" [name]="icon()" />
+
+  <div class="pb-toast__body">
+    <p class="pb-toast__title">{{ heading() }}</p>
+
+    @if (description(); as text) {
+      <p class="pb-toast__description">{{ text }}</p>
+    }
+  </div>
+
+  @if (dismissible()) {
+    <button
+      type="button"
+      class="pb-toast__dismiss"
+      [attr.aria-label]="t().toast.dismiss"
+      (click)="dismissed.emit()"
+    >
+      <app-icon name="close" />
+    </button>
+  }
+</div>

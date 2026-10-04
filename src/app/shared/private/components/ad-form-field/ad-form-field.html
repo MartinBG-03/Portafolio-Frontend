@@ -1,0 +1,26 @@
+<div class="ad-form-field">
+  <label
+    class="ad-form-field__label"
+    [class.is-hidden]="labelHidden()"
+    [id]="labelId(controlId())"
+    [attr.for]="controlId()"
+  >
+    {{ label() }}
+    @if (optional()) {
+      <span class="ad-form-field__optional">{{ texts().optional }}</span>
+    }
+  </label>
+
+  <ng-content />
+
+  @if (error(); as message) {
+    <p
+      class="ad-form-field__message ad-form-field__message--error"
+      [id]="messageId(controlId(), 'error')"
+    >
+      {{ message }}
+    </p>
+  } @else if (hint(); as message) {
+    <p class="ad-form-field__message" [id]="messageId(controlId(), 'hint')">{{ message }}</p>
+  }
+</div>

@@ -1,0 +1,45 @@
+<ad-dialog
+  [heading]="texts().heading"
+  [confirmLabel]="texts().save"
+  [cancelLabel]="texts().cancel"
+  [(open)]="open"
+  (confirmed)="submit()"
+>
+  <form class="devlog-resource-item-form" novalidate [formGroup]="form">
+    <ad-form-row>
+      <ad-text-field
+        [label]="texts().titleEs"
+        required
+        formControlName="titleEs"
+        [error]="errorOf('titleEs')"
+      />
+
+      <ad-text-field
+        [label]="texts().titleEn"
+        required
+        formControlName="titleEn"
+        [error]="errorOf('titleEn')"
+      />
+    </ad-form-row>
+
+    <ad-form-row>
+      <ad-textarea-field
+        [label]="texts().bodyEs"
+        optional
+        [rows]="3"
+        [maxLength]="limits.mediaBodyMaxLength"
+        formControlName="bodyEs"
+        [error]="errorOf('bodyEs')"
+      />
+
+      <ad-textarea-field
+        [label]="texts().bodyEn"
+        optional
+        [rows]="3"
+        [maxLength]="limits.mediaBodyMaxLength"
+        formControlName="bodyEn"
+        [error]="errorOf('bodyEn')"
+      />
+    </ad-form-row>
+  </form>
+</ad-dialog>

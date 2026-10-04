@@ -1,0 +1,21 @@
+<div class="ad-search-field" [class.is-disabled]="isDisabled()">
+  <ad-icon class="ad-search-field__icon" name="magnifer" />
+
+  <input
+    class="ad-search-field__control"
+    type="search"
+    [value]="value() ?? ''"
+    [placeholder]="placeholderText()"
+    [disabled]="isDisabled()"
+    [attr.aria-label]="label()"
+    (input)="onInput($event)"
+    (keydown.enter)="onSubmit()"
+    (blur)="touch()"
+  />
+
+  @if (value()) {
+    <ad-icon-button variant="ghost" size="sm" [label]="clearText()" (click)="clear()">
+      <ad-icon name="close" />
+    </ad-icon-button>
+  }
+</div>

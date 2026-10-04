@@ -1,0 +1,18 @@
+<section class="container pb-home-process">
+  <h2 class="pb-home-process__title">{{ t().home.process.heading }}</h2>
+
+  <ol class="pb-home-process__list">
+    @for (step of steps(); track step.id; let index = $index) {
+      <li class="pb-home-process__step">
+        <span class="pb-home-process__icon">
+          @if (step.icon; as name) {
+            <app-icon [name]="name" class="pb-home-process__glyph" />
+          }
+        </span>
+        <p class="pb-home-process__number">{{ t().home.process.step }} {{ index + 1 }}</p>
+        <h3 class="pb-home-process__step-title">{{ step.title }}</h3>
+        <p class="pb-home-process__description">{{ step.description }}</p>
+      </li>
+    }
+  </ol>
+</section>

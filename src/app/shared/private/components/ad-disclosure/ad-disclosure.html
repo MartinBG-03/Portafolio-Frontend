@@ -1,0 +1,16 @@
+<button
+  type="button"
+  class="ad-disclosure__toggle"
+  [attr.aria-expanded]="open()"
+  [attr.aria-controls]="panelId"
+  (click)="toggle()"
+>
+  <ad-icon [name]="open() ? 'arrow-down' : 'arrow-right'" />
+  {{ label() }}
+</button>
+
+@if (open()) {
+  <div class="ad-disclosure__panel" [id]="panelId">
+    <ng-content />
+  </div>
+}

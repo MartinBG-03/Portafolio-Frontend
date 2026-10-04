@@ -1,0 +1,31 @@
+<article class="pb-document-card">
+  <div [class]="'pb-document-card__thumb pb-document-card__thumb--' + tone()" aria-hidden="true">
+    <svg class="pb-document-card__file" viewBox="0 0 72 92">
+      <path
+        class="pb-document-card__sheet"
+        d="M8 0h40l24 24v60a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V8a8 8 0 0 1 8-8z"
+      />
+      <path class="pb-document-card__fold" d="M48 0l24 24H56a8 8 0 0 1-8-8z" />
+      <text class="pb-document-card__ext" x="36" y="62" text-anchor="middle">.{{ extension() }}</text>
+    </svg>
+  </div>
+
+  <div class="pb-document-card__body">
+    <h4 class="pb-document-card__title">{{ heading() }}</h4>
+    @if (description(); as text) {
+      <p class="pb-document-card__description">{{ text }}</p>
+    }
+    <span class="pb-document-card__meta">{{ meta() }}</span>
+
+    <div class="pb-document-card__actions">
+      <pb-button variant="secondary" pill block download [href]="url()">
+        <app-icon name="download" />
+        {{ texts().download }}
+      </pb-button>
+      <pb-button pill block target="_blank" [href]="url()">
+        <app-icon name="eye" />
+        {{ texts().view }}
+      </pb-button>
+    </div>
+  </div>
+</article>

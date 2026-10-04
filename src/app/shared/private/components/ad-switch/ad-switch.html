@@ -1,0 +1,14 @@
+<label class="ad-switch" [class.is-disabled]="isDisabled()">
+  <input
+    class="ad-switch__input"
+    type="checkbox"
+    role="switch"
+    [checked]="checked()"
+    [disabled]="isDisabled()"
+    [attr.aria-label]="label() ?? null"
+    (change)="onToggle($event)"
+    (blur)="touch()"
+  />
+  <span class="ad-switch__track" aria-hidden="true"></span>
+  <span class="ad-switch__text"><ng-content /></span>
+</label>

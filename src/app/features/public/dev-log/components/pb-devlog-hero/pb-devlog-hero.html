@@ -1,0 +1,12 @@
+<a class="pb-devlog-hero" [routerLink]="path()">
+  @if (coverUrl(); as url) {
+    <img class="pb-devlog-hero__image" [src]="url" alt="" />
+  }
+  <span class="pb-devlog-hero__scrim" aria-hidden="true"></span>
+  <span class="pb-devlog-hero__content">
+    <span class="pb-devlog-hero__badge">{{ texts().featured }}</span>
+    <h2 class="pb-devlog-hero__title">{{ title() }}</h2>
+    <p class="pb-devlog-hero__description">{{ description() }}</p>
+    <time class="pb-devlog-hero__date">{{ formattedDate() }}</time>
+  </span>
+</a>

@@ -1,0 +1,36 @@
+<span
+  class="ad-chip"
+  [class.is-selected]="selected()"
+  [class.is-disabled]="disabled()"
+  [class.is-interactive]="selectable()"
+>
+  @if (selectable()) {
+    <button
+      type="button"
+      class="ad-chip__action"
+      [attr.aria-pressed]="selected()"
+      [disabled]="disabled()"
+      (click)="toggle()"
+    >
+      <ng-container [ngTemplateOutlet]="content" />
+    </button>
+  } @else {
+    <span class="ad-chip__text">
+      <ng-container [ngTemplateOutlet]="content" />
+    </span>
+  }
+
+  @if (removable()) {
+    <button
+      type="button"
+      class="ad-chip__remove"
+      [attr.aria-label]="removeText()"
+      [disabled]="disabled()"
+      (click)="removed.emit()"
+    >
+      <ad-icon name="close" />
+    </button>
+  }
+</span>
+
+<ng-template #content><ng-content /></ng-template>

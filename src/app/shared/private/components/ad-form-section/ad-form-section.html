@@ -1,0 +1,10 @@
+<section class="ad-form-section" [attr.aria-label]="heading()">
+  <div class="ad-form-section__header">
+    <div class="ad-form-section__heading-group">
+      <h3 class="ad-form-section__title">{{ heading() }}</h3>
+      <ng-content select="[adFormSectionDescription]" />
+    </div>
+    <ng-content select="[adFormSectionAction]" />
+  </div>
+  <ng-content />
+</section>

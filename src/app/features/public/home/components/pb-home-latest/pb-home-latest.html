@@ -1,0 +1,39 @@
+<section class="container pb-home-latest">
+  <pb-spaced-heading [heading]="t().home.latest.heading" />
+
+  <div class="pb-home-latest__filters" role="group" [attr.aria-label]="t().home.latest.filterLabel">
+    @for (option of filterOptions(); track option.value) {
+      <pb-chip
+        selectable
+        controlled
+        [selected]="filter() === option.value"
+        (pressed)="select(option.value)"
+      >
+        {{ option.label }}
+      </pb-chip>
+    }
+  </div>
+
+  <ul class="pb-home-latest__grid">
+    @for (card of cards(); track card.id) {
+      <li>
+        <pb-media-card
+          [kind]="card.kindLabel"
+          [date]="card.dateLabel"
+          [heading]="card.title"
+          [tone]="card.tone"
+          [path]="card.path"
+          [queryParams]="card.queryParams"
+        />
+      </li>
+    }
+  </ul>
+
+  @if (canExpand()) {
+    <div class="pb-home-latest__more">
+      <pb-button variant="secondary" pill [expanded]="expanded()" (click)="toggle()">
+        {{ expanded() ? t().home.latest.seeLess : t().home.latest.seeAll }}
+      </pb-button>
+    </div>
+  }
+</section>

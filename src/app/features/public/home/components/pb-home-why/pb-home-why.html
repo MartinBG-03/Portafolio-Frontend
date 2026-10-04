@@ -1,0 +1,39 @@
+<section class="pb-home-why">
+  <div class="container pb-home-why__inner">
+    <div class="pb-home-why__photo">
+      <span class="pb-home-why__photo-label" aria-hidden="true">{{ t().menus.about.photo }}</span>
+
+      <p class="pb-home-why__stat">
+        <span class="pb-home-why__stat-number">{{ projectCount }}</span>
+        <span class="pb-home-why__stat-label">{{ t().home.why.projectsLabel }}</span>
+      </p>
+
+      <p class="pb-home-why__card">
+        <span class="pb-home-why__card-title">{{ t().home.why.cardTitle }}</span>
+        <span class="pb-home-why__card-description">{{ t().home.why.cardDescription }}</span>
+      </p>
+    </div>
+
+    <div class="pb-home-why__content">
+      <p class="pb-home-why__kicker">{{ t().home.why.kicker }}</p>
+      <h2 class="pb-home-why__title">{{ t().home.why.heading }}</h2>
+      <p class="pb-home-why__intro">{{ t().menus.about.quote }}</p>
+
+      <ul class="pb-home-why__points">
+        @for (point of points(); track point.id) {
+          <li class="pb-home-why__point">
+            <span class="pb-home-why__icon">
+              @if (point.icon; as name) {
+                <app-icon [name]="name" />
+              }
+            </span>
+            <span class="pb-home-why__point-text">
+              <span class="pb-home-why__point-title">{{ point.title }}</span>
+              <span class="pb-home-why__point-description">{{ point.description }}</span>
+            </span>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>

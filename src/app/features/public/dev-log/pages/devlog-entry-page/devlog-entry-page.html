@@ -1,0 +1,34 @@
+@if (view(); as entry) {
+  <pb-page-header
+    [heading]="entry.title"
+    [description]="entry.description"
+    [breadcrumbs]="breadcrumbs()"
+    icon="code"
+    wideDescription
+  />
+
+  <article class="container devlog-entry-page">
+    <pb-devlog-title-card
+      [title]="entry.title"
+      [date]="entry.date"
+      [categories]="entry.categories"
+      [coverImageUrl]="entry.coverUrl"
+      [buttonsPosition]="entry.titleDesign"
+      [shareUrl]="entry.shareUrl"
+      (sharedResult)="onShared($event)"
+    />
+
+    <pb-rich-text class="devlog-entry-page__body" [html]="entry.body" />
+
+    <pb-devlog-resources [resources]="entry.resources" />
+  </article>
+} @else {
+  <pb-page-header [heading]="t().nav.devLog" [breadcrumbs]="breadcrumbs()" icon="code" />
+
+  <section class="container devlog-entry-page">
+    <pb-empty-state [heading]="t().devLog.notFound.title" [description]="t().devLog.notFound.description" />
+    <div class="devlog-entry-page__back">
+      <pb-button variant="secondary" pill link="/dev-log">{{ t().devLog.notFound.back }}</pb-button>
+    </div>
+  </section>
+}

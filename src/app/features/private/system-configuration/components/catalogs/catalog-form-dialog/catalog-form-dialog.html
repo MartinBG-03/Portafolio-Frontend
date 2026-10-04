@@ -1,0 +1,87 @@
+<ad-dialog
+  [heading]="heading()"
+  [confirmLabel]="texts().save"
+  [cancelLabel]="texts().cancel"
+  [(open)]="open"
+  (confirmed)="submit()"
+>
+  <ad-breadcrumb adDialogEyebrow [items]="crumbs()" [label]="texts().pathLabel" />
+
+  <form class="catalog-form" novalidate [formGroup]="form">
+    <ad-form-section [heading]="texts().identification">
+      @if (parent()) {
+        <ad-text-field [label]="texts().parentCatalog" formControlName="parentName" />
+      }
+
+      <ad-text-field
+        [label]="texts().code"
+        [placeholder]="texts().codePlaceholder"
+        required
+        formControlName="code"
+        [hint]="isExistingSystemCatalog() ? texts().codeLockedHint : codeHint()"
+        [error]="errorOf('code')"
+      />
+
+      @if (!catalog()) {
+        <ad-switch formControlName="isSystemCatalog">{{ texts().isSystemCatalog }}</ad-switch>
+        @if (form.controls.isSystemCatalog.value) {
+          <p class="catalog-form__system-hint">{{ texts().isSystemCatalogHint }}</p>
+        }
+      }
+    </ad-form-section>
+
+    <ad-form-section [heading]="texts().content">
+      <ad-form-row>
+        <ad-text-field
+          [label]="texts().nameEs"
+          [placeholder]="texts().nameEsPlaceholder"
+          required
+          formControlName="nameEs"
+          [error]="errorOf('nameEs')"
+        />
+
+        <ad-text-field
+          [label]="texts().nameEn"
+          [placeholder]="texts().nameEnPlaceholder"
+          required
+          formControlName="nameEn"
+          [error]="errorOf('nameEn')"
+        />
+      </ad-form-row>
+
+      <ad-form-row>
+        <ad-textarea-field
+          [label]="texts().descriptionEs"
+          [placeholder]="texts().descriptionEsPlaceholder"
+          optional
+          [rows]="3"
+          [maxLength]="limits.descriptionMaxLength"
+          formControlName="descriptionEs"
+          [error]="errorOf('descriptionEs')"
+        />
+
+        <ad-textarea-field
+          [label]="texts().descriptionEn"
+          [placeholder]="texts().descriptionEnPlaceholder"
+          optional
+          [rows]="3"
+          [maxLength]="limits.descriptionMaxLength"
+          formControlName="descriptionEn"
+          [error]="errorOf('descriptionEn')"
+        />
+      </ad-form-row>
+    </ad-form-section>
+
+    <ad-form-section [heading]="texts().advanced">
+      <div class="catalog-form__order">
+        <ad-number-field
+          [label]="texts().order"
+          optional
+          [min]="0"
+          formControlName="sortOrder"
+          [error]="errorOf('sortOrder')"
+        />
+      </div>
+    </ad-form-section>
+  </form>
+</ad-dialog>

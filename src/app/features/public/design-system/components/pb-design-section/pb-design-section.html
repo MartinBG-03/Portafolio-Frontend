@@ -1,0 +1,7 @@
+<section class="pb-design-section" [id]="anchor()" [attr.aria-labelledby]="anchor() + '-title'">
+  <h2 class="pb-design-section__label" [id]="anchor() + '-title'">{{ heading() }}</h2>
+
+  <div class="pb-design-section__card">
+    <ng-content />
+  </div>
+</section>

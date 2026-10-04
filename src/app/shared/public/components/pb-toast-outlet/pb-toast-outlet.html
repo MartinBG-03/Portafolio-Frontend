@@ -1,0 +1,12 @@
+<div class="pb-toast-outlet">
+  @for (toast of toastService.toasts(); track toast.id) {
+    <pb-toast
+      class="pb-toast-outlet__item"
+      [variant]="toast.variant"
+      [heading]="toast.title"
+      [description]="toast.description"
+      dismissible
+      (dismissed)="toastService.dismiss(toast.id)"
+    />
+  }
+</div>

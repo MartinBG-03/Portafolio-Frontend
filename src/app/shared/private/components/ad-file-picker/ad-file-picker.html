@@ -1,0 +1,50 @@
+<div class="ad-file-picker">
+  <span class="ad-file-picker__label" [id]="inputId + '-label'">{{ label() }}</span>
+
+  <div
+    class="ad-file-picker__zone"
+    [class.is-dragging]="dragging()"
+    [class.is-disabled]="blocked()"
+    [class.is-invalid]="!!error()"
+    [class.is-filled]="filled()"
+    (dragover)="onDragOver($event)"
+    (dragleave)="dragging.set(false)"
+    (drop)="onDrop($event)"
+  >
+    @if (filled()) {
+      <div class="ad-file-picker__preview">
+        <ng-content />
+      </div>
+    }
+    <div class="ad-file-picker__prompt">
+      <ad-icon class="ad-file-picker__icon" name="upload" />
+      <span class="ad-file-picker__text">{{ promptText() }}</span>
+      <ad-button
+        variant="secondary"
+        size="sm"
+        [disabled]="blocked()"
+        [attr.aria-describedby]="hint() || error() ? hintId : null"
+        (click)="browse()"
+      >
+        {{ buttonText() }}
+      </ad-button>
+    </div>
+    <input
+      #fileInput
+      class="ad-file-picker__input"
+      type="file"
+      tabindex="-1"
+      [id]="inputId"
+      [accept]="accept()"
+      [multiple]="multiple()"
+      [attr.aria-labelledby]="inputId + '-label'"
+      (change)="onChange($event)"
+    />
+  </div>
+
+  @if (error(); as message) {
+    <p class="ad-file-picker__message is-error" [id]="hintId">{{ message }}</p>
+  } @else if (hint(); as message) {
+    <p class="ad-file-picker__message" [id]="hintId">{{ message }}</p>
+  }
+</div>

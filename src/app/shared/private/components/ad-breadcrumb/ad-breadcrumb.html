@@ -1,0 +1,10 @@
+<nav class="ad-breadcrumb" [attr.aria-label]="labelText()">
+  @for (item of items(); track $index; let last = $last) {
+    @if (last) {
+      <b class="ad-breadcrumb__current" aria-current="page">{{ item }}</b>
+    } @else {
+      <span>{{ item }}</span>
+      <span class="ad-breadcrumb__separator" aria-hidden="true">{{ separator() }}</span>
+    }
+  }
+</nav>

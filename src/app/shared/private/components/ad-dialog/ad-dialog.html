@@ -1,0 +1,44 @@
+@if (open()) {
+  <div class="ad-dialog__backdrop">
+    <div
+      #panel
+      class="ad-dialog"
+      role="dialog"
+      aria-modal="true"
+      tabindex="-1"
+      [class]="'ad-dialog--' + size()"
+      [attr.aria-labelledby]="titleId"
+      (keydown)="onKeydown($event)"
+    >
+      <header class="ad-dialog__header">
+        <div class="ad-dialog__heading">
+          <ng-content select="[adDialogEyebrow]" />
+          <h2 class="ad-dialog__title" [id]="titleId">{{ heading() }}</h2>
+        </div>
+        <ad-icon-button variant="ghost" size="sm" [label]="closeText()" (click)="cancel()">
+          <ad-icon name="close" />
+        </ad-icon-button>
+      </header>
+
+      <div class="ad-dialog__body">
+        <ng-content />
+      </div>
+
+      <footer class="ad-dialog__footer">
+        <ng-content select="[adDialogAction]" />
+        @if (cancelText()) {
+          <ad-button variant="secondary" (click)="cancel()">{{ cancelText() }}</ad-button>
+        }
+        @if (confirmText()) {
+          <ad-button
+            [variant]="confirmVariant()"
+            [disabled]="confirmDisabled()"
+            (click)="confirm()"
+          >
+            {{ confirmText() }}
+          </ad-button>
+        }
+      </footer>
+    </div>
+  </div>
+}

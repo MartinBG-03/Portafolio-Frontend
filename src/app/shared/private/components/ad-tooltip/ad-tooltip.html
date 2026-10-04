@@ -1,0 +1,10 @@
+<div
+  class="ad-tooltip"
+  role="tooltip"
+  [id]="id"
+  [class.is-top]="position().placement === 'top'"
+  [style.top.px]="position().top"
+  [style.left.px]="position().left"
+>
+  {{ text() }}
+</div>

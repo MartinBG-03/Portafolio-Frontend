@@ -1,0 +1,22 @@
+<div class="ad-table-toolbar">
+  @if (searchable()) {
+    <ad-search-field
+      class="ad-table-toolbar__search"
+      [label]="searchText()"
+      [placeholder]="placeholderText()"
+      [ngModel]="text()"
+      (ngModelChange)="onText($event ?? '')"
+      (submitted)="onSubmit($event)"
+    />
+  }
+
+  <div class="ad-table-toolbar__actions">
+    <ng-content />
+  </div>
+
+  @if (configurable()) {
+    <ad-icon-button [label]="configureText()" (click)="configure.emit()">
+      <ad-icon name="system-settings" />
+    </ad-icon-button>
+  }
+</div>

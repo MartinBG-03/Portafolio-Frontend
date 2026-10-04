@@ -1,0 +1,68 @@
+<ad-page-header
+  [heading]="nav().nav.catalogs"
+  icon="catalogs"
+  [description]="nav().descriptions.catalogs"
+/>
+
+<ad-card>
+  <ad-table
+    searchable
+    columnsConfigurable
+    [caption]="texts().caption"
+    [childCaption]="texts().childCaption"
+    [emptyText]="texts().emptyText"
+    [searchPlaceholder]="texts().searchPlaceholder"
+    [childSearchPlaceholder]="texts().childSearchPlaceholder"
+    [rowActionsLabel]="texts().rowActionsLabel"
+    [columns]="columns()"
+    [rows]="rows()"
+    [rowKey]="rowKey"
+    [totalRecords]="totalRecords()"
+    [rowActions]="rowActions()"
+    [hasChildren]="hasChildren"
+    [children]="children()"
+    [(search)]="search"
+    [(filters)]="filters"
+    [(page)]="page"
+    [(pageSize)]="pageSize"
+    (rowAction)="onRowAction($event)"
+    (childrenRequested)="loadChildren($event)"
+  >
+    <ng-template adTableToolbar let-parent>
+      <ad-button (click)="openCreate(parent)">
+        <ad-icon name="add" />
+        {{ parent ? texts().newSubcatalog : texts().newCatalog }}
+      </ad-button>
+    </ng-template>
+
+    <ng-template adTableCell="isSystemCatalog" let-row>
+      <ad-badge [dot]="false" tone="neutral">
+        {{ row.isSystemCatalog ? texts().systemApplies : texts().systemNotApplies }}
+      </ad-badge>
+    </ng-template>
+
+    <ng-template adTableCell="status" let-row>
+      <ad-badge [dot]="false" [tone]="row.status ? 'success' : 'neutral'">
+        {{ row.status ? texts().active : texts().inactive }}
+      </ad-badge>
+    </ng-template>
+  </ad-table>
+</ad-card>
+
+<ad-catalog-form-dialog
+  [catalog]="editing()"
+  [parent]="formParent()"
+  [path]="formPath()"
+  [(open)]="formOpen"
+  (saved)="save($event)"
+/>
+
+<ad-confirm-dialog
+  [heading]="confirmation()?.heading ?? ''"
+  [confirmLabel]="confirmation()?.confirmLabel"
+  [tone]="confirmation()?.tone ?? 'primary'"
+  [(open)]="confirmOpen"
+  (confirmed)="confirmAction()"
+>
+  {{ confirmationMessage() }}
+</ad-confirm-dialog>

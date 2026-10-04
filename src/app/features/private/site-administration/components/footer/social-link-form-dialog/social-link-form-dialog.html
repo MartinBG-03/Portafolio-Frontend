@@ -1,0 +1,25 @@
+<ad-dialog [heading]="heading()" [(open)]="open" (confirmed)="submit()">
+  <form class="social-link-form" novalidate [formGroup]="form">
+    <ad-select
+      [label]="texts().platform"
+      [options]="selectOptions()"
+      required
+      formControlName="catalogId"
+      [error]="form.controls.catalogId.touched && form.controls.catalogId.invalid ? texts().required : null"
+    />
+
+    <ad-text-field
+      [label]="valueLabel()"
+      [hint]="valueHint()"
+      required
+      formControlName="value"
+      [error]="form.controls.value.touched && form.controls.value.invalid ? texts().required : null"
+    />
+
+    <ad-number-field
+      [label]="texts().sortOrder"
+      [min]="0"
+      formControlName="sortOrder"
+    />
+  </form>
+</ad-dialog>

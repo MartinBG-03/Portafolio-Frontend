@@ -1,0 +1,131 @@
+@use 'abstracts' as *;
+
+:host {
+  display: inline-flex;
+}
+
+:host(.is-block) {
+  display: block;
+  width: 100%;
+}
+
+.pb-button {
+  --icon-size: var(--space-4);
+
+  @include reset-button;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: var(--border-width-strong) solid transparent;
+  border-radius: var(--radius);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.25;
+  text-decoration: none;
+  @include focus-ring;
+
+  &--primary {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+
+    &:hover {
+      background-color: var(--color-primary-hover);
+    }
+
+    &:active {
+      background-color: var(--color-primary-active);
+    }
+  }
+
+  &--secondary {
+    border-color: var(--color-text);
+    color: var(--color-text);
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--color-text) 8%, transparent);
+    }
+
+    &:active {
+      background-color: color-mix(in srgb, var(--color-text) 14%, transparent);
+    }
+  }
+
+  &--tertiary {
+    padding-inline: var(--space-1);
+    color: var(--color-text);
+
+    &:hover,
+    &:active {
+      color: var(--color-accent);
+      text-decoration: underline;
+    }
+  }
+
+  &--media {
+    background-color: var(--color-on-media);
+    color: var(--color-on-media-solid);
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--color-on-media) 88%, var(--color-on-media-solid));
+    }
+
+    &:active {
+      background-color: color-mix(in srgb, var(--color-on-media) 78%, var(--color-on-media-solid));
+    }
+  }
+
+  &--media-outline {
+    border-color: var(--color-media-outline);
+    color: var(--color-on-media);
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--color-on-media) 10%, transparent);
+    }
+
+    &:active {
+      background-color: color-mix(in srgb, var(--color-on-media) 18%, transparent);
+    }
+  }
+
+  &--ink {
+    background-color: var(--color-on-accent-solid);
+    color: var(--color-on-media);
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--color-on-accent-solid) 88%, var(--color-on-media));
+    }
+
+    &:active {
+      background-color: color-mix(in srgb, var(--color-on-accent-solid) 78%, black);
+    }
+  }
+
+  &--pill {
+    padding-inline: var(--space-6);
+    border-radius: var(--radius-pill);
+  }
+
+  &--block {
+    width: 100%;
+  }
+
+  &:disabled,
+  &.is-disabled {
+    border-color: transparent;
+    background-color: var(--color-disabled-bg);
+    color: var(--color-disabled-text);
+    cursor: not-allowed;
+    text-decoration: none;
+
+    &.pb-button--secondary {
+      border-color: var(--color-disabled-bg);
+      background-color: transparent;
+    }
+
+    &.pb-button--tertiary {
+      background-color: transparent;
+    }
+  }
+}

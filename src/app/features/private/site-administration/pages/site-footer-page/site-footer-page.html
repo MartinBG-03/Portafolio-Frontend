@@ -1,0 +1,149 @@
+<ad-page-header
+  [heading]="nav().nav.footer"
+  icon="site-footer"
+  [description]="nav().descriptions.footer"
+/>
+
+<div class="site-footer-page__columns">
+  <ad-form-section [heading]="texts().linksSection">
+    <p adFormSectionDescription class="site-footer-page__hint">{{ texts().linksHint }}</p>
+
+    <ng-container adFormSectionAction>
+      <ad-button (click)="openCreateLink()">
+        <ad-icon name="add" />
+        {{ texts().newLink }}
+      </ad-button>
+    </ng-container>
+
+    <div class="site-footer-page__list">
+      @for (link of links(); track link.id) {
+        <div class="site-footer-page__row">
+          <span class="site-footer-page__row-label">
+            <span class="site-footer-page__row-title">
+              {{ routeKeyTexts()[link.routeKey] }}
+              <ad-badge [dot]="false" [tone]="link.status ? 'success' : 'neutral'">
+                {{ link.status ? texts().active : texts().inactive }}
+              </ad-badge>
+            </span>
+          </span>
+          <ad-menu
+            class="site-footer-page__row-menu"
+            [label]="texts().rowActionsLabel"
+            [items]="linkRowActions(link)"
+            (selected)="onLinkRowAction(link, $event)"
+          />
+        </div>
+      } @empty {
+        <p class="site-footer-page__empty">{{ texts().noLinks }}</p>
+      }
+    </div>
+  </ad-form-section>
+
+  <ad-form-section [heading]="texts().socialsSection">
+    <p adFormSectionDescription class="site-footer-page__hint">{{ texts().socialsHint }}</p>
+
+    <ng-container adFormSectionAction>
+      <ad-button (click)="openCreateSocial()">
+        <ad-icon name="add" />
+        {{ texts().newSocial }}
+      </ad-button>
+    </ng-container>
+
+    <div class="site-footer-page__list">
+      @for (social of socials(); track social.id) {
+        <div class="site-footer-page__row">
+          @if (toIconName(social.platformCode); as iconName) {
+            <app-icon [name]="iconName" />
+          } @else {
+            <ad-icon name="link" />
+          }
+          <span class="site-footer-page__row-label">
+            <span class="site-footer-page__row-title">
+              {{ language() === 'en' ? social.platformNameEn : social.platformNameEs }}
+              <ad-badge [dot]="false" [tone]="social.status ? 'success' : 'neutral'">
+                {{ social.status ? texts().active : texts().inactive }}
+              </ad-badge>
+            </span>
+            <span class="site-footer-page__row-value">{{ social.value }}</span>
+          </span>
+          <ad-menu
+            class="site-footer-page__row-menu"
+            [label]="texts().rowActionsLabel"
+            [items]="socialRowActions(social)"
+            (selected)="onSocialRowAction(social, $event)"
+          />
+        </div>
+      } @empty {
+        <p class="site-footer-page__empty">{{ texts().noSocials }}</p>
+      }
+    </div>
+  </ad-form-section>
+</div>
+
+<ad-form-section [heading]="texts().gameSection">
+  <ad-switch
+    [checked]="gameSettings()?.isVisible ?? true"
+    (checkedChange)="toggleGameVisible($event)"
+  >{{ texts().gameVisible }}</ad-switch>
+
+  <div class="site-footer-page__theme-grid">
+    @for (theme of gameThemes(); track theme.id) {
+      <article class="site-footer-page__theme-card">
+        <header class="site-footer-page__theme-header">
+          <span class="site-footer-page__row-label">{{ gameThemeTexts()[theme.theme] }}</span>
+          <ad-badge [dot]="false" [tone]="theme.isEnabled ? 'success' : 'neutral'">
+            {{ theme.isEnabled ? texts().active : texts().inactive }}
+          </ad-badge>
+        </header>
+
+        <ad-game-theme-preview [theme]="theme.theme" />
+
+        <ad-button variant="secondary" (click)="openEditTheme(theme)">
+          <ad-icon name="edit" />
+          {{ texts().editTheme }}
+        </ad-button>
+      </article>
+    }
+  </div>
+</ad-form-section>
+
+<ad-footer-link-form-dialog
+  [link]="editingLink()"
+  [usedRouteKeys]="usedRouteKeys()"
+  [(open)]="linkFormOpen"
+  (saved)="saveLink($event)"
+/>
+
+<ad-social-link-form-dialog
+  [link]="editingSocial()"
+  [platformOptions]="platformOptions()"
+  [usedCatalogIds]="usedCatalogIds()"
+  [(open)]="socialFormOpen"
+  (saved)="saveSocial($event)"
+/>
+
+<ad-game-theme-form-dialog
+  [theme]="editingTheme()"
+  [(open)]="themeFormOpen"
+  (saved)="saveTheme($event)"
+/>
+
+<ad-confirm-dialog
+  [heading]="linkConfirmation()?.heading ?? ''"
+  [confirmLabel]="linkConfirmation()?.confirmLabel"
+  [tone]="linkConfirmation()?.tone ?? 'primary'"
+  [(open)]="linkConfirmOpen"
+  (confirmed)="confirmLinkAction()"
+>
+  {{ linkConfirmationMessage() }}
+</ad-confirm-dialog>
+
+<ad-confirm-dialog
+  [heading]="socialConfirmation()?.heading ?? ''"
+  [confirmLabel]="socialConfirmation()?.confirmLabel"
+  [tone]="socialConfirmation()?.tone ?? 'primary'"
+  [(open)]="socialConfirmOpen"
+  (confirmed)="confirmSocialAction()"
+>
+  {{ socialConfirmationMessage() }}
+</ad-confirm-dialog>

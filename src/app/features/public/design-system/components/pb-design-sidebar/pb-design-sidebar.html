@@ -1,0 +1,13 @@
+<nav class="pb-design-sidebar" [attr.aria-label]="label()">
+  @for (link of links(); track link.id) {
+    <a
+      class="pb-design-sidebar__link"
+      [class.is-active]="activeId() === link.id"
+      [routerLink]="[]"
+      [fragment]="link.id"
+      (click)="selected.emit(link.id)"
+    >
+      {{ link.label }}
+    </a>
+  }
+</nav>

@@ -1,0 +1,9 @@
+<button
+  type="button"
+  class="pb-theme-toggle"
+  [adTooltip]="themeService.isDark() ? t().theme.tooltipLight : t().theme.tooltipDark"
+  [attr.aria-label]="themeService.isDark() ? t().theme.toLight : t().theme.toDark"
+  (click)="themeService.toggle()"
+>
+  <app-icon [name]="themeService.isDark() ? 'sun' : 'moon'" />
+</button>

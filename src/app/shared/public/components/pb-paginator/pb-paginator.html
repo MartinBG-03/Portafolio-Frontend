@@ -1,0 +1,25 @@
+<nav class="pb-paginator" [class.pb-paginator--on-media]="onMedia()" [attr.aria-label]="texts().label">
+  <button
+    type="button"
+    class="pb-paginator__button"
+    [attr.aria-label]="texts().previous"
+    [disabled]="isFirst()"
+    (click)="previous()"
+  >
+    <app-icon name="chevron-left" />
+  </button>
+
+  <span class="pb-paginator__count" aria-live="polite">
+    <strong class="pb-paginator__current">{{ index() + 1 }}</strong> / {{ total() }}
+  </span>
+
+  <button
+    type="button"
+    class="pb-paginator__button"
+    [attr.aria-label]="texts().next"
+    [disabled]="isLast()"
+    (click)="next()"
+  >
+    <app-icon name="chevron-right" />
+  </button>
+</nav>

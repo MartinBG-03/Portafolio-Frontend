@@ -1,0 +1,19 @@
+<div class="pb-search-field" [class.is-disabled]="disabled()">
+  <app-icon class="pb-search-field__icon" name="magnifer" />
+
+  <input
+    class="pb-search-field__control"
+    type="search"
+    [value]="value() ?? ''"
+    [placeholder]="placeholder()"
+    [disabled]="disabled()"
+    [attr.aria-label]="label()"
+    (input)="onInput($event)"
+    (keydown.enter)="onSubmit()"
+    (blur)="touch()"
+  />
+
+  @if (showShortcut()) {
+    <kbd class="pb-search-field__shortcut" aria-hidden="true">&#9166;</kbd>
+  }
+</div>

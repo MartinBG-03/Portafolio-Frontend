@@ -1,0 +1,8 @@
+<a [class]="cardClass()" [routerLink]="path()" [queryParams]="queryParams()">
+  <span class="pb-media-card__kind">{{ kind() }}</span>
+
+  <span class="pb-media-card__caption">
+    <span class="pb-media-card__date">{{ date() }}</span>
+    <span class="pb-media-card__title">{{ heading() }}</span>
+  </span>
+</a>

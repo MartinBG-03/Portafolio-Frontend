@@ -1,0 +1,21 @@
+:host {
+  display: block;
+}
+
+.pb-empty-state {
+  padding: var(--space-10) var(--space-4);
+  border: var(--border-width) dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+
+  &__title {
+    margin: 0;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &__description {
+    margin: var(--space-1) 0 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+}

@@ -1,0 +1,37 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.ad-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  &__label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+
+    &.is-hidden {
+      @include visually-hidden;
+    }
+  }
+
+  &__optional {
+    margin-inline-start: var(--space-1);
+    color: var(--color-text-muted);
+    font-weight: 400;
+  }
+
+  &__message {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+
+    &--error {
+      color: var(--color-error);
+      font-weight: var(--font-weight-semibold);
+    }
+  }
+}

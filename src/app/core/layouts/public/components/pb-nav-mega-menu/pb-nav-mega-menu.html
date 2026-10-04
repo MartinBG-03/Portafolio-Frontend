@@ -1,0 +1,113 @@
+<div class="pb-nav-mega" [id]="panelId()">
+  <div class="pb-nav-mega__body">
+    <ul class="pb-nav-mega__rail">
+      @for (category of menu().categories; track category.id) {
+        <li>
+          <a
+            class="pb-nav-mega__category"
+            [class.is-active]="active().id === category.id"
+            [routerLink]="category.path"
+            [queryParams]="category.queryParams"
+            (mouseenter)="select(category.id)"
+            (focus)="select(category.id)"
+            (click)="navigated.emit()"
+          >
+            <span class="pb-nav-mega__category-title">{{ category.title }}</span>
+            @if (category.count !== undefined) {
+              <span class="pb-nav-mega__count">{{ category.count }}</span>
+            }
+            <app-icon class="pb-nav-mega__chevron" name="chevron-right" />
+          </a>
+        </li>
+      }
+    </ul>
+
+    <div class="pb-nav-mega__preview">
+      <div class="pb-nav-mega__preview-head">
+        <h3 class="pb-nav-mega__preview-title">{{ active().title }}</h3>
+        <a
+          class="pb-nav-mega__all"
+          [routerLink]="active().more.path"
+          [queryParams]="active().more.queryParams"
+          (click)="navigated.emit()"
+        >
+          {{ active().more.label }}
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+
+      @let panel = active().panel;
+      <div class="pb-nav-mega__panel">
+        @if (panel.kind === 'projects') {
+          @if (panel.items.length > 0) {
+            <ul class="pb-nav-mega__grid">
+              @for (item of panel.items; track item.id) {
+                <li>
+                  <a
+                    class="pb-nav-mega__project"
+                    [routerLink]="item.path"
+                    [queryParams]="item.queryParams"
+                    (click)="navigated.emit()"
+                  >
+                    <span [class]="'pb-nav-mega__media pb-nav-mega__media--' + item.tone">
+                      {{ panel.imageLabel }}
+                    </span>
+                    <span class="pb-nav-mega__project-title">{{ item.title }}</span>
+                    <span class="pb-nav-mega__project-description">{{ item.description }}</span>
+                  </a>
+                </li>
+              }
+            </ul>
+          } @else {
+            <p class="pb-nav-mega__empty">{{ panel.emptyLabel }}</p>
+          }
+        } @else if (panel.kind === 'story') {
+          <div class="pb-nav-mega__story">
+            <span class="pb-nav-mega__photo" aria-hidden="true">{{ panel.photoLabel }}</span>
+            <div class="pb-nav-mega__story-body">
+              <p class="pb-nav-mega__quote">&ldquo;{{ panel.quote }}&rdquo;</p>
+              <p class="pb-nav-mega__description">{{ panel.description }}</p>
+              <div class="pb-nav-mega__actions">
+                @for (action of panel.actions; track action.label) {
+                  <pb-button
+                    [variant]="action.variant"
+                    [href]="action.href"
+                    [download]="action.download ?? false"
+                    (click)="navigated.emit()"
+                  >
+                    {{ action.label }}
+                  </pb-button>
+                }
+              </div>
+            </div>
+          </div>
+        } @else if (panel.kind === 'timeline') {
+          <ol class="pb-nav-mega__timeline">
+            @for (entry of panel.entries; track entry.title) {
+              <li class="pb-nav-mega__entry">
+                <span class="pb-nav-mega__period">{{ entry.period }}</span>
+                <span class="pb-nav-mega__entry-body">
+                  <span class="pb-nav-mega__entry-title">{{ entry.title }}</span>
+                  <span class="pb-nav-mega__entry-description">{{ entry.description }}</span>
+                </span>
+              </li>
+            }
+          </ol>
+        } @else {
+          <div class="pb-nav-mega__stack">
+            @for (group of panel.groups; track group.title) {
+              <div>
+                <h4 class="pb-nav-mega__group-title">{{ group.title }}</h4>
+                <ul class="pb-nav-mega__chips">
+                  @for (item of group.items; track item) {
+                    <li class="pb-nav-mega__chip">{{ item }}</li>
+                  }
+                </ul>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<button
+  type="button"
+  [class]="controlClass()"
+  [class.is-pressed]="pressed()"
+  [disabled]="disabled()"
+  [attr.aria-label]="label()"
+  [attr.aria-pressed]="pressed()"
+  [attr.aria-expanded]="expanded()"
+  [attr.aria-haspopup]="popup() ?? null"
+  [adTooltip]="label()"
+>
+  <ng-content />
+</button>

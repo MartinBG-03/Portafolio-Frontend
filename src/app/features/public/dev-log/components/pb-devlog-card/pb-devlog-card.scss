@@ -1,0 +1,106 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.pb-devlog-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.pb-devlog-card__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background-color: var(--color-card);
+  @include focus-ring;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.04);
+  }
+}
+
+.pb-devlog-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.pb-devlog-card__tag {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-tone-accent);
+  color: var(--color-accent-text);
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pb-devlog-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding-top: var(--space-4);
+
+  time {
+    color: var(--color-text-subtle);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  h3 {
+    margin: var(--space-2) 0;
+    font-family: var(--font-heading);
+    font-size: var(--font-size-md);
+    line-height: 1.3;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      @include focus-ring;
+
+      &:hover {
+        color: var(--color-accent-text);
+      }
+    }
+  }
+
+  p {
+    display: -webkit-box;
+    flex: 1;
+    margin: 0 0 var(--space-3);
+    overflow: hidden;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}
+
+.pb-devlog-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  width: fit-content;
+  color: var(--color-accent-text);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  @include focus-ring;
+}

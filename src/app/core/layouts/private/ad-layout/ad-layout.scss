@@ -1,0 +1,32 @@
+@use 'abstracts' as *;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.ad-layout {
+  &__top {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    padding: var(--space-4) var(--space-4) 0;
+    background-color: var(--color-bg);
+
+    @include media-up(md) {
+      padding-inline: var(--space-8);
+    }
+  }
+
+  &__main {
+    flex: 1;
+    padding: var(--space-6) var(--space-4);
+
+    @include media-up(md) {
+      padding: var(--space-8);
+    }
+  }
+}

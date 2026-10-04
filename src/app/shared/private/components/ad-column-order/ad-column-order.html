@@ -1,0 +1,43 @@
+<ol class="ad-column-order" [attr.aria-label]="labelText()">
+  @for (
+    column of columns();
+    track column.key;
+    let index = $index;
+    let first = $first;
+    let last = $last
+  ) {
+    <li
+      class="ad-column-order__item"
+      draggable="true"
+      [class.is-dragging]="dragging() === column.key"
+      [class.is-over]="over() === column.key && dragging() !== column.key"
+      (dragstart)="startDrag($event, column.key)"
+      (dragover)="dragOver($event, column.key)"
+      (drop)="drop($event, column.key)"
+      (dragend)="endDrag()"
+    >
+      <ad-icon class="ad-column-order__handle" name="drag-handle" />
+      <span class="ad-column-order__name">{{ column.header }}</span>
+
+      <ad-icon-button
+        variant="ghost"
+        size="sm"
+        [label]="texts().moveUp(column.header)"
+        [disabled]="first"
+        (click)="moveBy(index, -1)"
+      >
+        <ad-icon name="arrow-up" />
+      </ad-icon-button>
+
+      <ad-icon-button
+        variant="ghost"
+        size="sm"
+        [label]="texts().moveDown(column.header)"
+        [disabled]="last"
+        (click)="moveBy(index, 1)"
+      >
+        <ad-icon name="arrow-down" />
+      </ad-icon-button>
+    </li>
+  }
+</ol>

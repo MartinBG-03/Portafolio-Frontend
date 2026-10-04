@@ -1,0 +1,59 @@
+@use 'abstracts' as *;
+
+:host {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.ad-icon-button {
+  @include reset-button;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--control-size);
+  height: var(--control-size);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: 50%;
+  background-color: var(--color-card);
+  color: var(--color-text-muted);
+  font-size: var(--icon-size);
+  @include focus-ring;
+
+  &:hover {
+    border-color: var(--color-text-muted);
+    color: var(--color-text);
+  }
+
+  &--sm {
+    width: var(--space-8);
+    height: var(--space-8);
+  }
+
+  &--ghost {
+    border-color: transparent;
+    background-color: transparent;
+
+    &:hover {
+      border-color: transparent;
+      background-color: var(--color-surface);
+    }
+  }
+
+  &.is-pressed {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+
+  &:disabled {
+    border-color: var(--color-border);
+    background-color: var(--color-disabled-bg);
+    color: var(--color-disabled-text);
+    cursor: not-allowed;
+  }
+
+  &--ghost:disabled {
+    border-color: transparent;
+    background-color: transparent;
+  }
+}

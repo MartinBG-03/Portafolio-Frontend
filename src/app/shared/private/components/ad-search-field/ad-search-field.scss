@@ -1,0 +1,23 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.ad-search-field {
+  @include field-box;
+
+  padding-inline: var(--space-4) var(--space-1);
+
+  &__icon {
+    color: var(--color-text-muted);
+  }
+
+  &__control {
+    @include field-input;
+
+    &::-webkit-search-cancel-button {
+      appearance: none;
+    }
+  }
+}

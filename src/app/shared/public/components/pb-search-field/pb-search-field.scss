@@ -1,0 +1,66 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.pb-search-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width-strong) solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-field);
+
+  &:focus-within {
+    border-color: var(--color-focus-border);
+  }
+
+  &.is-disabled {
+    border-color: var(--color-field-disabled-border);
+    background-color: var(--color-field-disabled-bg);
+    cursor: not-allowed;
+  }
+
+  &__icon {
+    --icon-size: var(--space-4);
+
+    color: var(--color-text-subtle);
+  }
+
+  &__control {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    outline: none;
+
+    &::placeholder {
+      color: var(--color-text-subtle);
+    }
+
+    &:disabled {
+      color: var(--color-disabled-text);
+      cursor: not-allowed;
+    }
+  }
+
+  &__shortcut {
+    display: none;
+    padding: 0 var(--space-2);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius);
+    color: var(--color-text-subtle);
+    font: inherit;
+    font-size: var(--font-size-xs);
+  }
+
+  &:focus-within &__shortcut {
+    display: inline-block;
+  }
+}

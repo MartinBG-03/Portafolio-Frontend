@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+.game-theme-preview {
+  &__canvas {
+    display: block;
+    width: 100%;
+    height: 7.5rem;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg);
+  }
+
+  &__baseline-ink {
+    display: none;
+    color: var(--color-border);
+  }
+}

@@ -1,0 +1,11 @@
+<ad-dialog
+  size="sm"
+  [heading]="heading()"
+  [confirmLabel]="confirmText()"
+  [cancelLabel]="cancelText()"
+  [confirmVariant]="tone()"
+  [(open)]="open"
+  (confirmed)="confirm()"
+>
+  <p class="ad-confirm-dialog__message"><ng-content /></p>
+</ad-dialog>

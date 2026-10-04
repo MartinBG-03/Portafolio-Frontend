@@ -1,0 +1,195 @@
+@let ds = t().designSystem;
+@let sections = ds.sections;
+@let labels = ds.labels;
+@let fields = ds.fields;
+@let mode = ds.mode;
+
+<pb-page-header
+  [heading]="t().nav.designSystem"
+  [description]="ds.description"
+  [breadcrumbs]="breadcrumbs()"
+  icon="code"
+/>
+
+<div class="design-system-page">
+  <pb-design-sidebar
+    [label]="ds.navLabel"
+    [links]="sectionLinks()"
+    [activeId]="activeId()"
+    (selected)="scrollTo($event)"
+  />
+
+  <div class="design-system-page__content">
+    <pb-design-section anchor="typography" [heading]="sections.typography">
+      <div>
+        <p class="design-system-page__type design-system-page__type--h1">
+          H1 — {{ ds.typography.h1 }}
+        </p>
+        <span class="design-system-page__caption">Inter 800 · 40px</span>
+      </div>
+      <div>
+        <p class="design-system-page__type design-system-page__type--h2">
+          H2 — {{ ds.typography.h2 }}
+        </p>
+        <span class="design-system-page__caption">Inter 700 · 28px</span>
+      </div>
+      <div>
+        <p class="design-system-page__type design-system-page__type--h3">
+          H3 — {{ ds.typography.h3 }}
+        </p>
+        <span class="design-system-page__caption">Inter 600 · 20px</span>
+      </div>
+      <p class="design-system-page__type design-system-page__type--body">
+        {{ ds.typography.bodyTitle }}<br />{{ ds.typography.body }}
+      </p>
+    </pb-design-section>
+
+    <pb-design-section anchor="breadcrumbs" [heading]="sections.breadcrumbs">
+      <pb-breadcrumbs [items]="sampleBreadcrumbs()" />
+      <span class="design-system-page__caption">{{ ds.breadcrumbsNote }}</span>
+    </pb-design-section>
+
+    <pb-design-section anchor="buttons" [heading]="sections.buttons">
+      @for (variant of buttonVariants; track variant) {
+        <div class="design-system-page__row">
+          <span class="design-system-page__row-label">{{ labels[variant] }}</span>
+          <pb-button [variant]="variant">{{ labels.continue }}</pb-button>
+          <pb-button [variant]="variant" disabled>{{ labels.continue }}</pb-button>
+        </div>
+      }
+      <span class="design-system-page__caption">{{ ds.buttonsNote }}</span>
+    </pb-design-section>
+
+    <pb-design-section anchor="icon-buttons" [heading]="sections.iconButtons">
+      <div class="design-system-page__row">
+        @for (variant of iconButtonVariants; track variant) {
+          <figure class="design-system-page__item">
+            <pb-icon-button [label]="labels[variant]" [variant]="variant">
+              <app-icon name="sun" />
+            </pb-icon-button>
+            <figcaption class="design-system-page__caption">{{ labels[variant] }}</figcaption>
+          </figure>
+        }
+        <figure class="design-system-page__item">
+          <pb-icon-button [label]="labels.disabled" disabled>
+            <app-icon name="sun" />
+          </pb-icon-button>
+          <figcaption class="design-system-page__caption">{{ labels.disabled }}</figcaption>
+        </figure>
+      </div>
+    </pb-design-section>
+
+    <pb-design-section anchor="fields" [heading]="sections.fields">
+      <div class="design-system-page__fields">
+        <pb-text-field [label]="fields.text" [placeholder]="fields.textPlaceholder" />
+        <pb-text-field
+          [label]="fields.hint"
+          [placeholder]="fields.textPlaceholder"
+          [hint]="fields.hintMessage"
+        />
+        <pb-text-field
+          type="number"
+          [label]="fields.number"
+          [placeholder]="fields.numberPlaceholder"
+        />
+        <pb-text-field type="email" [label]="fields.error" [error]="fields.errorMessage" />
+        <pb-text-field [label]="fields.disabled" [formControl]="disabledControl" />
+        <pb-textarea-field [label]="fields.textarea" [rows]="3" />
+      </div>
+    </pb-design-section>
+
+    <pb-design-section anchor="search" [heading]="sections.search">
+      <pb-search-field
+        [label]="ds.search.label"
+        [placeholder]="ds.search.placeholder"
+        showShortcut
+      />
+      <span class="design-system-page__caption">{{ ds.search.note }}</span>
+    </pb-design-section>
+
+    <pb-design-section anchor="notifications" [heading]="sections.toasts">
+      <div class="design-system-page__toasts">
+        @for (variant of toastVariants; track variant) {
+          <pb-toast
+            [variant]="variant"
+            [heading]="ds.toasts[variant].title"
+            [description]="ds.toasts[variant].description"
+          />
+        }
+      </div>
+      <div class="design-system-page__row">
+        @for (variant of toastVariants; track variant) {
+          <pb-button variant="secondary" (click)="showToast(variant)">
+            {{ labels.showToast }} · {{ ds.toastVariants[variant] }}
+          </pb-button>
+        }
+      </div>
+    </pb-design-section>
+
+    <pb-design-section anchor="chips" [heading]="sections.chips">
+      <div class="design-system-page__row">
+        <pb-chip>{{ labels.default }}</pb-chip>
+        <pb-chip selectable [selected]="true">{{ labels.selected }}</pb-chip>
+        <pb-chip variant="alert">{{ labels.alert }}</pb-chip>
+        <pb-chip variant="success">{{ labels.success }}</pb-chip>
+        <pb-chip selectable disabled>{{ labels.disabled }}</pb-chip>
+      </div>
+      <div class="design-system-page__row">
+        @for (tag of tags(); track tag) {
+          <pb-chip removable [removeLabel]="t().chip.remove + ' ' + tag" (removed)="removeTag(tag)">
+            {{ tag }}
+          </pb-chip>
+        }
+      </div>
+    </pb-design-section>
+
+    <pb-design-section anchor="mode" [heading]="sections.mode">
+      <div>
+        <span class="design-system-page__caption">{{ mode.palette }}</span>
+        <ul class="design-system-page__swatches">
+          @for (swatch of palette; track swatch.name) {
+            <li class="design-system-page__swatch">
+              <span
+                class="design-system-page__color"
+                [style.background-color]="'var(' + swatch.variable + ')'"
+              ></span>
+              <span class="design-system-page__name">{{ swatch.name }}</span>
+              <code class="design-system-page__code">{{ swatch.variable }}</code>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="design-system-page__previews">
+        @for (scheme of colorSchemes; track scheme) {
+          <div [class]="'design-system-page__preview design-system-page__preview--' + scheme">
+            <span class="design-system-page__preview-scheme">{{ mode[scheme] }}</span>
+            <p class="design-system-page__preview-title">{{ mode.title }}</p>
+            <p class="design-system-page__preview-text">{{ mode.text }}</p>
+            <p class="design-system-page__preview-accent">{{ mode.accent }}</p>
+            <div class="design-system-page__row">
+              <pb-button>{{ labels.primary }}</pb-button>
+              <pb-button variant="secondary">{{ labels.secondary }}</pb-button>
+            </div>
+            <div class="design-system-page__surface">
+              <pb-chip>{{ labels.default }}</pb-chip>
+            </div>
+          </div>
+        }
+      </div>
+      <span class="design-system-page__caption">{{ mode.note }}</span>
+    </pb-design-section>
+
+    <pb-design-section anchor="headers" [heading]="sections.headers">
+      <div class="design-system-page__frame">
+        <pb-page-header
+          [headingLevel]="2"
+          [heading]="ds.header.heading"
+          [description]="ds.header.description"
+          [breadcrumbs]="headerBreadcrumbs()"
+        />
+      </div>
+      <span class="design-system-page__caption">{{ ds.header.note }}</span>
+    </pb-design-section>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+.ad-table-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3);
+
+  &__search {
+    flex: 1 1 14rem;
+    min-width: 0;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: var(--space-2);
+
+    &:empty {
+      display: none;
+    }
+  }
+}

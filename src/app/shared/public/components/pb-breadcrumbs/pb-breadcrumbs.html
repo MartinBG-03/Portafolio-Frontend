@@ -1,0 +1,22 @@
+<nav class="pb-breadcrumbs" [attr.aria-label]="ariaLabel()">
+  <ol class="pb-breadcrumbs__list">
+    @for (item of items(); track $index; let last = $last) {
+      <li class="pb-breadcrumbs__item">
+        @if (!last && item.path !== undefined) {
+          <a class="pb-breadcrumbs__link" [routerLink]="item.path">{{ item.label }}</a>
+        } @else {
+          <span
+            class="pb-breadcrumbs__text"
+            [class.is-current]="last"
+            [attr.aria-current]="last ? 'page' : null"
+          >
+            {{ item.label }}
+          </span>
+        }
+        @if (!last) {
+          <span class="pb-breadcrumbs__separator" aria-hidden="true">/</span>
+        }
+      </li>
+    }
+  </ol>
+</nav>

@@ -1,0 +1,12 @@
+@use 'abstracts' as *;
+
+.devlog-entry-page {
+  display: grid;
+  gap: var(--space-10);
+  padding-block: var(--space-6) var(--space-16);
+
+  &__back {
+    display: flex;
+    justify-content: center;
+  }
+}

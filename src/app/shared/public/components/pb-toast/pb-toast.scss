@@ -1,0 +1,67 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.pb-toast {
+  --toast-color: var(--color-info);
+  --toast-bg: var(--color-info-bg);
+  --toast-border: var(--color-info-border);
+
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: var(--border-width) solid var(--toast-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--toast-bg);
+  color: var(--toast-color);
+
+  &--success {
+    --toast-color: var(--color-success);
+    --toast-bg: var(--color-success-bg);
+    --toast-border: var(--color-success-border);
+  }
+
+  &--error {
+    --toast-color: var(--color-error);
+    --toast-bg: var(--color-error-bg);
+    --toast-border: var(--color-error-border);
+  }
+
+  &--warning {
+    --toast-color: var(--color-warning);
+    --toast-bg: var(--color-warning-bg);
+    --toast-border: var(--color-warning-border);
+  }
+
+  &__icon {
+    margin-block-start: var(--space-1);
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__dismiss {
+    --icon-size: var(--space-4);
+
+    @include reset-button;
+    display: inline-flex;
+    margin-block-start: var(--space-1);
+    @include focus-ring;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+  }
+
+  &__description {
+    margin: var(--space-1) 0 0;
+    font-size: var(--font-size-xs);
+  }
+}

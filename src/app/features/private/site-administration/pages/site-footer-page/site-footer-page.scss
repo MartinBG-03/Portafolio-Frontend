@@ -1,0 +1,105 @@
+@use 'abstracts' as *;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.site-footer-page {
+  &__columns {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+
+    @include media-up('md') {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+
+  &__hint {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-card);
+  }
+
+  &__row-label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 0;
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &__row-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  &__row-value {
+    overflow: hidden;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-regular);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__row-menu {
+    margin-inline-start: auto;
+  }
+
+  &__empty {
+    margin: 0 0 var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  &__theme-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+
+    @include media-up('sm') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__theme-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-card);
+  }
+
+  &__theme-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+}

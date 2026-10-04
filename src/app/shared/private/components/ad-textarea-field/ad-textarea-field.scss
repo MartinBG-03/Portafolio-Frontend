@@ -1,0 +1,28 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.ad-textarea-field {
+  &__box {
+    @include field-box;
+
+    align-items: flex-start;
+    padding-block: var(--space-3);
+  }
+
+  &__control {
+    @include field-input;
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  &__counter {
+    display: block;
+    margin-top: var(--space-1);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    text-align: end;
+  }
+}

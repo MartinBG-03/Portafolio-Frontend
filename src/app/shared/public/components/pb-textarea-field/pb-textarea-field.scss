@@ -1,0 +1,13 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.pb-textarea-field {
+  &__control {
+    @include field-control;
+    display: block;
+    resize: none;
+  }
+}

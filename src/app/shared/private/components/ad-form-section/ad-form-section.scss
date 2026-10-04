@@ -1,0 +1,37 @@
+:host {
+  display: block;
+}
+
+.ad-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  &__heading-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 0;
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-extrabold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+}

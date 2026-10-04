@@ -1,0 +1,13 @@
+.contact-page {
+  padding-block: var(--space-6) var(--space-12);
+
+  &__form {
+    display: grid;
+    gap: var(--space-5);
+    max-width: 36rem;
+  }
+
+  &__actions {
+    display: flex;
+  }
+}

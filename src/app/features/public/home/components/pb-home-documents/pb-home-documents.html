@@ -1,0 +1,21 @@
+<section class="container pb-home-documents">
+  <pb-spaced-heading [heading]="t().home.documents.heading" [description]="t().academy.description" />
+
+  <ul class="pb-home-documents__grid">
+    @for (document of documents(); track document.id) {
+      <li>
+        <pb-document-card
+          [heading]="document.title"
+          [description]="document.description"
+          [meta]="document.meta"
+          [href]="document.href"
+          [downloadLabel]="t().home.documents.download"
+        />
+      </li>
+    }
+  </ul>
+
+  <div class="pb-home-documents__more">
+    <pb-button variant="secondary" pill link="/academy">{{ t().home.documents.link }}</pb-button>
+  </div>
+</section>

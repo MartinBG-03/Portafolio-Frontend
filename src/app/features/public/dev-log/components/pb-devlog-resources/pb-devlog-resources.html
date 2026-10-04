@@ -1,0 +1,54 @@
+@if (hasAny()) {
+  <section class="pb-devlog-resources" [attr.aria-label]="texts().heading">
+    <h2 class="pb-devlog-resources__heading">{{ texts().heading }}</h2>
+
+    @if (media().length > 0) {
+      <section class="pb-devlog-resources__group">
+        <h3 class="pb-devlog-resources__title">{{ texts().media }}</h3>
+        <pb-media-carousel [items]="media()" />
+      </section>
+    }
+
+    @if (documents().length > 0) {
+      <section class="pb-devlog-resources__group">
+        <h3 class="pb-devlog-resources__title">{{ texts().documents }}</h3>
+        <ul class="pb-devlog-resources__documents">
+          @for (document of visibleDocuments(); track document.id) {
+            <li>
+              <pb-document-card
+                [heading]="document.title"
+                [description]="document.body"
+                [fileName]="document.fileName"
+                [url]="document.url"
+                [sizeBytes]="document.sizeBytes"
+              />
+            </li>
+          }
+        </ul>
+        @if (documentPages() > 1) {
+          <div class="pb-devlog-resources__footer">
+            <pb-paginator [total]="documentPages()" [(index)]="documentPage" />
+          </div>
+        }
+      </section>
+    }
+
+    @if (audios().length > 0) {
+      <section class="pb-devlog-resources__group">
+        <h3 class="pb-devlog-resources__title">{{ texts().audio }}</h3>
+        <ul class="pb-devlog-resources__audios">
+          @for (audio of visibleAudios(); track audio.id) {
+            <li>
+              <pb-audio-player [src]="audio.url" [heading]="audio.title" [description]="audio.body" />
+            </li>
+          }
+        </ul>
+        @if (audioPages() > 1) {
+          <div class="pb-devlog-resources__footer">
+            <pb-paginator [total]="audioPages()" [(index)]="audioPage" />
+          </div>
+        }
+      </section>
+    }
+  </section>
+}

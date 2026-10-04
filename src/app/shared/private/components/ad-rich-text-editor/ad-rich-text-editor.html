@@ -1,0 +1,92 @@
+<ad-form-field
+  [controlId]="controlId"
+  [label]="label()"
+  [labelHidden]="labelHidden()"
+  [optional]="optional()"
+  [hint]="hint()"
+  [error]="error()"
+>
+  <div
+    class="ad-rich-text"
+    [class.is-invalid]="!!error()"
+    [class.is-disabled]="isDisabled()"
+    [class.is-focused]="focused()"
+  >
+    <div class="ad-rich-text__toolbar" role="toolbar" [attr.aria-label]="texts().toolbar(label())">
+      @for (tool of definitions(); track tool.key; let index = $index) {
+        @if (startsGroup(index)) {
+          <span class="ad-rich-text__separator" aria-hidden="true"></span>
+        }
+        <button
+          type="button"
+          class="ad-rich-text__tool"
+          [class.is-active]="isActive(tool.key)"
+          [class.is-glyph]="!tool.icon"
+          [attr.data-tool]="tool.key"
+          [attr.aria-label]="toolLabels()[tool.key]"
+          [attr.aria-pressed]="isActive(tool.key)"
+          [disabled]="isDisabled()"
+          [adTooltip]="toolLabels()[tool.key]"
+          (mousedown)="$event.preventDefault()"
+          (click)="apply(tool)"
+        >
+          @if (tool.icon; as icon) {
+            <ad-icon [name]="icon" />
+          } @else {
+            <span aria-hidden="true">{{ tool.glyph }}</span>
+          }
+        </button>
+      }
+    </div>
+
+    @if (linkOpen()) {
+      <div class="ad-rich-text__link" role="group" [attr.aria-label]="texts().linkLabel">
+        <label class="ad-rich-text__link-label" [attr.for]="linkInputId">{{ texts().linkLabel }}</label>
+        <div class="ad-rich-text__link-row">
+          <input
+            class="ad-rich-text__link-input"
+            type="url"
+            [id]="linkInputId"
+            [placeholder]="texts().linkPlaceholder"
+            [value]="linkUrl()"
+            [attr.aria-invalid]="linkError() ? 'true' : null"
+            (input)="setLinkUrl($any($event.target).value)"
+          />
+          <ad-button size="sm" (click)="applyLink()">{{ texts().applyLink }}</ad-button>
+          @if (editingLink()) {
+            <ad-button size="sm" variant="secondary" (click)="removeLink()">
+              {{ texts().removeLink }}
+            </ad-button>
+          }
+          <ad-button size="sm" variant="tertiary" (click)="closeLink()">{{ texts().cancel }}</ad-button>
+        </div>
+        @if (linkError(); as message) {
+          <p class="ad-rich-text__link-error">{{ message }}</p>
+        }
+      </div>
+    }
+
+    <div
+      #editor
+      class="ad-rich-text__content"
+      role="textbox"
+      tabindex="0"
+      [id]="controlId"
+      [class.is-single-line]="singleLine()"
+      [class.is-empty]="empty()"
+      [style.--rich-text-rows]="singleLine() ? 1 : minRows()"
+      [attr.contenteditable]="isDisabled() ? 'false' : 'true'"
+      [attr.aria-multiline]="!singleLine()"
+      [attr.aria-labelledby]="labelId()"
+      [attr.aria-describedby]="describedBy()"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-required]="required() || null"
+      [attr.data-placeholder]="placeholder()"
+      (input)="onInput()"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      (keydown)="onKeydown($event)"
+      (paste)="onPaste($event)"
+    ></div>
+  </div>
+</ad-form-field>

@@ -1,0 +1,17 @@
+<ad-dialog [heading]="heading()" [(open)]="open" (confirmed)="submit()">
+  <form class="footer-link-form" novalidate [formGroup]="form">
+    <ad-select
+      [label]="texts().routeKey"
+      [options]="routeOptions()"
+      required
+      formControlName="routeKey"
+      [error]="form.controls.routeKey.touched && form.controls.routeKey.invalid ? texts().required : null"
+    />
+
+    <ad-number-field
+      [label]="texts().sortOrder"
+      [min]="0"
+      formControlName="sortOrder"
+    />
+  </form>
+</ad-dialog>

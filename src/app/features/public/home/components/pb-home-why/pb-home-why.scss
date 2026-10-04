@@ -1,0 +1,160 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+  border-block: var(--border-width) solid var(--color-border);
+  background-color: var(--color-card);
+}
+
+.pb-home-why {
+  &__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    align-items: center;
+    padding-block: var(--space-12);
+
+    @include media-up(md) {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+      padding-block: var(--space-16);
+    }
+  }
+
+  &__photo {
+    position: relative;
+    min-block-size: 22rem;
+    border-radius: var(--radius-2xl);
+    background: var(--gradient-media-mobile);
+    color: var(--color-media-muted);
+
+    @include media-up(md) {
+      min-block-size: 27rem;
+    }
+  }
+
+  &__photo-label {
+    position: absolute;
+    inset-block-start: var(--space-6);
+    inset-inline-end: var(--space-6);
+    font-size: var(--font-size-sm);
+  }
+
+  &__stat,
+  &__card {
+    position: absolute;
+    inset-block-end: var(--space-6);
+    display: grid;
+    gap: var(--space-1);
+    margin: 0;
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-xl);
+  }
+
+  &__stat {
+    inset-inline-start: var(--space-6);
+    inline-size: var(--space-24);
+    background-color: var(--color-accent);
+    color: var(--color-on-accent-solid);
+
+    @include media-up(md) {
+      inline-size: 8rem;
+    }
+  }
+
+  &__stat-number {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-extrabold);
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  &__stat-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+  }
+
+  &__card {
+    inset-inline-end: var(--space-6);
+    max-inline-size: 13rem;
+    background-color: var(--color-card);
+    box-shadow: var(--shadow-popover);
+    color: var(--color-text);
+  }
+
+  &__card-title {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+  }
+
+  &__card-description {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+  }
+
+  &__kicker {
+    margin: 0 0 var(--space-3);
+    color: var(--color-accent-text);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  &__intro {
+    max-inline-size: 32ch;
+    margin: var(--space-4) 0 var(--space-6);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-md);
+  }
+
+  &__points {
+    @include reset-list;
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  &__point {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-4);
+    align-items: start;
+  }
+
+  &__icon {
+    --icon-size: var(--space-6);
+
+    display: grid;
+    place-items: center;
+    inline-size: var(--space-12);
+    block-size: var(--space-12);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-tone-gray);
+  }
+
+  &__point-text {
+    display: grid;
+  }
+
+  &__point-title {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-bold);
+  }
+
+  &__point-description {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+}

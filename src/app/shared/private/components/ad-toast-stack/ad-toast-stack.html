@@ -1,0 +1,15 @@
+<div class="ad-toast-stack">
+  @for (toast of toastService.toasts(); track toast.id) {
+    <ad-alert
+      class="ad-toast-stack__item"
+      animate.enter="ad-toast-stack__item--enter"
+      animate.leave="ad-toast-stack__item--leave"
+      dismissible
+      [tone]="toast.tone"
+      [heading]="toast.heading"
+      (dismissed)="toastService.dismiss(toast.id)"
+    >
+      {{ toast.message }}
+    </ad-alert>
+  }
+</div>

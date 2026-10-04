@@ -1,0 +1,89 @@
+<section
+  class="pb-runner-game"
+  [attr.aria-label]="t().runner.label"
+  [attr.data-game-theme]="gameTheme()"
+>
+  <div class="pb-runner-game__bar">
+    <div class="pb-runner-game__controls">
+      <div class="pb-runner-game__themes" role="group" [attr.aria-label]="t().runner.theme.label">
+        @for (option of themes(); track option) {
+          <button
+            type="button"
+            [class]="'pb-runner-game__theme-btn pb-runner-game__theme-btn--' + option"
+            [class.pb-runner-game__theme-btn--active]="gameTheme() === option"
+            [attr.aria-pressed]="gameTheme() === option"
+            [attr.aria-label]="t().runner.theme[option]"
+            (click)="setTheme(option)"
+          ></button>
+        }
+      </div>
+
+      <div class="pb-runner-game__styles" role="group" [attr.aria-label]="t().runner.artStyle.label">
+        @for (option of artStyles; track option) {
+          <button
+            type="button"
+            class="pb-runner-game__style-btn"
+            [class.pb-runner-game__style-btn--active]="artStyle() === option"
+            [attr.aria-pressed]="artStyle() === option"
+            (click)="setArtStyle(option)"
+          >
+            {{ t().runner.artStyle[option] }}
+          </button>
+        }
+      </div>
+
+      <div class="pb-runner-game__zoom" role="group" [attr.aria-label]="t().runner.zoom.label">
+        <button
+          type="button"
+          class="pb-runner-game__zoom-btn"
+          [disabled]="zoom() <= minZoom"
+          [attr.aria-label]="t().runner.zoom.out"
+          (click)="changeZoom(-1)"
+        >
+          −
+        </button>
+        <span class="pb-runner-game__zoom-value" aria-live="polite">×{{ zoom() }}</span>
+        <button
+          type="button"
+          class="pb-runner-game__zoom-btn"
+          [disabled]="zoom() >= maxZoom"
+          [attr.aria-label]="t().runner.zoom.in"
+          (click)="changeZoom(1)"
+        >
+          +
+        </button>
+      </div>
+    </div>
+    <p class="pb-runner-game__scores">
+      <span class="pb-runner-game__score">{{ t().runner.score }} {{ score() }}</span>
+      <span class="pb-runner-game__best">{{ t().runner.best }} {{ best() }}</span>
+    </p>
+  </div>
+
+  <div class="pb-runner-game__stage">
+    <canvas
+      #canvas
+      class="pb-runner-game__canvas"
+      tabindex="0"
+      role="img"
+      [style.height.px]="height * zoom()"
+      [attr.aria-label]="t().runner.canvas"
+      (keydown)="onKeydown($event)"
+      (keyup)="onKeyup($event)"
+      (pointerdown)="onPointerdown($event)"
+    ></canvas>
+
+    @if (status() !== 'running') {
+      <p class="pb-runner-game__overlay" aria-live="polite">
+        @if (status() === 'over') {
+          <span class="pb-runner-game__headline">{{ gameOverText() }}</span>
+          <span class="pb-runner-game__hint">{{ retryText() }}</span>
+        } @else {
+          <span class="pb-runner-game__hint">{{ instructions() }}</span>
+        }
+      </p>
+    }
+  </div>
+
+  <span #baselineInk class="pb-runner-game__baseline-ink" aria-hidden="true"></span>
+</section>

@@ -1,0 +1,22 @@
+<pb-form-field
+  [controlId]="controlId"
+  [label]="label()"
+  [hint]="hint()"
+  [error]="error()"
+  [required]="required()"
+>
+  <input
+    class="pb-text-field__control"
+    [id]="controlId"
+    [type]="type()"
+    [value]="value() ?? ''"
+    [placeholder]="placeholder()"
+    [disabled]="disabled()"
+    [required]="required()"
+    [attr.autocomplete]="autocomplete() ?? null"
+    [attr.aria-invalid]="error() ? 'true' : null"
+    [attr.aria-describedby]="describedBy()"
+    (input)="onInput($event)"
+    (blur)="touch()"
+  />
+</pb-form-field>

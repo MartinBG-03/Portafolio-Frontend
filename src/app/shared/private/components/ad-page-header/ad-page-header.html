@@ -1,0 +1,20 @@
+<header class="ad-page-header">
+  <span class="ad-page-header__icon" aria-hidden="true">
+    @if (icon(); as name) {
+      <ad-icon [name]="name" />
+    } @else {
+      <span class="ad-page-header__glyph">{{ glyph() }}</span>
+    }
+  </span>
+
+  <div class="ad-page-header__text">
+    <h1 class="ad-page-header__title">{{ heading() }}</h1>
+    @if (description(); as text) {
+      <p class="ad-page-header__description">{{ text }}</p>
+    }
+  </div>
+
+  <div class="ad-page-header__actions">
+    <ng-content />
+  </div>
+</header>

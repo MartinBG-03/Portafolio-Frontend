@@ -1,0 +1,95 @@
+<article class="pb-audio-player" [class.is-playing]="playing()" [class.is-expanded]="expanded()">
+  <audio
+    #audio
+    preload="metadata"
+    [src]="src()"
+    (play)="onPlay()"
+    (pause)="onPause()"
+    (ended)="onEnded()"
+    (timeupdate)="onTimeUpdate()"
+    (durationchange)="onDurationChange()"
+    (loadedmetadata)="onDurationChange()"
+  ></audio>
+
+  <div class="pb-audio-player__head">
+    <div class="pb-audio-player__text">
+      <h4 class="pb-audio-player__title">
+        {{ heading() }}
+        <span class="pb-audio-player__eq" aria-hidden="true"><i></i><i></i><i></i></span>
+      </h4>
+
+      @if (description(); as text) {
+        <div class="pb-audio-player__collapse" [id]="descriptionId">
+          <div>
+            <p class="pb-audio-player__description">{{ text }}</p>
+          </div>
+        </div>
+      }
+    </div>
+
+    @if (description()) {
+      <button
+        type="button"
+        class="pb-audio-player__toggle"
+        [attr.aria-label]="expanded() ? texts().hideDescription : texts().showDescription"
+        [attr.aria-expanded]="expanded()"
+        [attr.aria-controls]="descriptionId"
+        (click)="toggleDescription()"
+      >
+        <app-icon name="chevron-down" />
+      </button>
+    }
+  </div>
+
+  <div class="pb-audio-player__player">
+    <div class="pb-audio-player__transport">
+      <button
+        type="button"
+        class="pb-audio-player__skip"
+        [attr.aria-label]="texts().rewind"
+        (click)="skip(-1)"
+      >
+        <app-icon name="rewind" />
+        <span aria-hidden="true">{{ skipSeconds }}</span>
+      </button>
+
+      <button
+        type="button"
+        class="pb-audio-player__play"
+        [attr.aria-label]="playing() ? texts().pause : texts().play"
+        (click)="toggle()"
+      >
+        <app-icon [name]="playing() ? 'pause' : 'play'" />
+      </button>
+
+      <button
+        type="button"
+        class="pb-audio-player__skip"
+        [attr.aria-label]="texts().forward"
+        (click)="skip(1)"
+      >
+        <app-icon name="forward" />
+        <span aria-hidden="true">{{ skipSeconds }}</span>
+      </button>
+    </div>
+
+    <div class="pb-audio-player__timeline">
+      <input
+        class="pb-audio-player__seek"
+        type="range"
+        min="0"
+        step="0.1"
+        [max]="duration()"
+        [value]="current()"
+        [style.--progress.%]="progress()"
+        [attr.aria-label]="texts().seek"
+        [attr.aria-valuetext]="currentLabel() + ' / ' + durationLabel()"
+        (input)="seek($event)"
+      />
+      <div class="pb-audio-player__times">
+        <span>{{ currentLabel() }}</span>
+        <span>{{ durationLabel() }}</span>
+      </div>
+    </div>
+  </div>
+</article>

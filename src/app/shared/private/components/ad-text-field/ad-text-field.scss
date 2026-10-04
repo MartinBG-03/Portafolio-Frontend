@@ -1,0 +1,25 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.ad-text-field {
+  &__box {
+    @include field-box;
+  }
+
+  &__prefix {
+    padding-inline-end: var(--space-3);
+    border-inline-end: var(--border-width) solid var(--color-border);
+    color: var(--color-text-muted);
+  }
+
+  &__control {
+    @include field-input;
+  }
+
+  &__reveal {
+    margin-inline-end: calc(var(--space-2) * -1);
+  }
+}

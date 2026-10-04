@@ -1,0 +1,44 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.pb-devlog-resources {
+  display: grid;
+  gap: var(--space-12);
+
+  &__heading {
+    margin: 0 0 calc(var(--space-6) * -1);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-2xl);
+  }
+
+  &__title {
+    margin: 0 0 var(--space-5);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-lg);
+  }
+
+  &__documents {
+    @include reset-list;
+    display: grid;
+    gap: var(--space-5);
+
+    @include media-up(md) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__audios {
+    @include reset-list;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--space-5);
+  }
+}

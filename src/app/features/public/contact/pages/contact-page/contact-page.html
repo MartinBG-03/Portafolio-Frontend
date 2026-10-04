@@ -1,0 +1,44 @@
+<pb-page-header
+  [heading]="t().nav.contact"
+  [description]="t().contact.description"
+  [breadcrumbs]="breadcrumbs()"
+  icon="code"
+/>
+
+<section class="container contact-page">
+  <form class="contact-page__form" [formGroup]="form" novalidate (ngSubmit)="submit()">
+    <pb-text-field
+      formControlName="name"
+      autocomplete="name"
+      required
+      [label]="t().contact.form.name"
+      [placeholder]="t().contact.form.namePlaceholder"
+      [error]="errorFor('name')"
+    />
+
+    <pb-text-field
+      formControlName="email"
+      type="email"
+      autocomplete="email"
+      required
+      [label]="t().contact.form.email"
+      [placeholder]="t().contact.form.emailPlaceholder"
+      [error]="errorFor('email')"
+    />
+
+    <pb-textarea-field
+      formControlName="message"
+      required
+      [rows]="6"
+      [label]="t().contact.form.message"
+      [placeholder]="t().contact.form.messagePlaceholder"
+      [error]="errorFor('message')"
+    />
+
+    <div class="contact-page__actions">
+      <pb-button type="submit" [disabled]="submitting()">
+        {{ submitting() ? t().contact.form.sending : t().contact.form.submit }}
+      </pb-button>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,33 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.ad-range-field {
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+
+    &.is-disabled {
+      opacity: 0.6;
+    }
+  }
+
+  &__control {
+    flex: 1;
+    accent-color: var(--color-primary);
+    @include focus-ring;
+  }
+
+  &__value {
+    flex-shrink: 0;
+    min-width: 3.5rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+}

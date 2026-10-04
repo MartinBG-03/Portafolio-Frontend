@@ -1,0 +1,71 @@
+<div class="ad-wizard" [class.ad-wizard--side]="layout() === 'side'">
+  <nav class="ad-wizard__nav" [attr.aria-label]="label()">
+    <ol class="ad-wizard__steps">
+      @for (step of steps(); track step.key; let index = $index) {
+        <li
+          class="ad-wizard__step"
+          [class.is-current]="index === currentIndex()"
+          [class.is-complete]="isComplete(index)"
+        >
+          <button
+            type="button"
+            class="ad-wizard__step-button"
+            [disabled]="!isReachable(index) || busy()"
+            [attr.aria-current]="index === currentIndex() ? 'step' : null"
+            (click)="goTo(index)"
+          >
+            <span class="ad-wizard__marker" aria-hidden="true">
+              @if (isComplete(index)) {
+                <ad-icon name="check" />
+              } @else {
+                {{ index + 1 }}
+              }
+            </span>
+            <span class="ad-wizard__step-text">
+              <span class="ad-wizard__step-label">{{ step.label }}</span>
+              @if (step.description) {
+                <span class="ad-wizard__step-description">{{ step.description }}</span>
+              }
+            </span>
+          </button>
+        </li>
+      }
+    </ol>
+  </nav>
+
+  <section class="ad-wizard__body" [attr.aria-label]="current()?.label">
+    <p class="ad-wizard__progress">
+      {{ texts().progress(currentIndex() + 1, steps().length) }}
+    </p>
+    @if (template(); as content) {
+      <ng-container [ngTemplateOutlet]="content" />
+    }
+  </section>
+
+  <footer class="ad-wizard__footer">
+    <ad-button variant="tertiary" [disabled]="busy()" (click)="cancelled.emit()">
+      {{ cancelText() }}
+    </ad-button>
+
+    <div class="ad-wizard__footer-actions">
+      @if (!isFirst()) {
+        <ad-button variant="secondary" [disabled]="busy()" (click)="previous()">
+          <ad-icon name="arrow-left" />
+          {{ texts().previous }}
+        </ad-button>
+      }
+
+      @if (isLast()) {
+        <ad-button [disabled]="busy()" (click)="finish()">
+          <ad-icon name="check" />
+          {{ busy() ? texts().saving : finishText() }}
+        </ad-button>
+      } @else {
+        <ad-button [disabled]="busy()" (click)="next()">
+          {{ texts().next }}
+          <ad-icon name="arrow-right" />
+        </ad-button>
+      }
+    </div>
+  </footer>
+</div>

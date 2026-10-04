@@ -1,0 +1,64 @@
+<ad-form-field
+  [controlId]="controlId"
+  [label]="label()"
+  [labelHidden]="labelHidden()"
+  [optional]="optional()"
+  [hint]="hint()"
+  [error]="error()"
+>
+  <div class="ad-select__wrapper">
+    <button
+      type="button"
+      role="combobox"
+      class="ad-select__trigger"
+      [class.is-invalid]="!!error()"
+      [id]="controlId"
+      [disabled]="isDisabled()"
+      aria-haspopup="listbox"
+      [attr.aria-expanded]="open()"
+      [attr.aria-controls]="open() ? listboxId : null"
+      [attr.aria-activedescendant]="activeId()"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-describedby]="describedBy()"
+      (click)="toggle()"
+      (keydown)="onKeydown($event)"
+      (blur)="onBlur()"
+    >
+      <span class="ad-select__value" [class.is-placeholder]="!selected()">
+        {{ selected()?.label ?? (placeholder() || texts().select) }}
+      </span>
+      <ad-icon class="ad-select__chevron" [class.is-open]="open()" name="arrow-down" />
+    </button>
+
+    @if (open()) {
+      <ul
+        class="ad-select__list"
+        [class.is-up]="openUp()"
+        role="listbox"
+        [id]="listboxId"
+        [attr.aria-label]="label()"
+        (mousedown)="$event.preventDefault()"
+      >
+        @for (option of options(); track option.value; let index = $index) {
+          <li
+            role="option"
+            class="ad-select__option"
+            [id]="optionId(index)"
+            [class.is-active]="index === activeIndex()"
+            [class.is-selected]="option.value === value()"
+            [class.is-disabled]="option.disabled"
+            [attr.aria-selected]="option.value === value()"
+            [attr.aria-disabled]="option.disabled ? 'true' : null"
+            (click)="choose(option)"
+            (mousemove)="hover(index)"
+          >
+            {{ option.label }}
+            @if (option.value === value()) {
+              <ad-icon name="check" />
+            }
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</ad-form-field>

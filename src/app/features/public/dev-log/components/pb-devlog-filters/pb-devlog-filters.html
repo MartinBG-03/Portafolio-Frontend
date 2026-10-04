@@ -1,0 +1,34 @@
+<aside class="pb-devlog-filters">
+  <label class="pb-devlog-filters__search">
+    <app-icon name="magnifer" />
+    <input type="search" [placeholder]="texts().search" [value]="searchTerm()" (input)="onSearch($event)" />
+  </label>
+
+  <h3 class="pb-devlog-filters__title">{{ texts().categories }}</h3>
+
+  <ul class="pb-devlog-filters__list">
+    <li>
+      <button
+        type="button"
+        class="pb-devlog-filters__chip"
+        [class.pb-devlog-filters__chip--active]="selectedId() === null"
+        (click)="selectAll()"
+      >
+        {{ texts().all }}
+        <b>{{ total() }}</b>
+      </button>
+    </li>
+    @for (category of categories(); track category.id) {
+      <li>
+        <button
+          type="button"
+          class="pb-devlog-filters__chip"
+          [class.pb-devlog-filters__chip--active]="selectedId() === category.id"
+          (click)="select(category.id)"
+        >
+          {{ category.label }}
+        </button>
+      </li>
+    }
+  </ul>
+</aside>

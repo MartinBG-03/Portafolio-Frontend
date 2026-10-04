@@ -1,0 +1,16 @@
+<label class="ad-checkbox" [class.is-disabled]="isDisabled()">
+  <input
+    class="ad-checkbox__input"
+    type="checkbox"
+    [checked]="checked()"
+    [indeterminate]="indeterminate()"
+    [disabled]="isDisabled()"
+    [attr.aria-label]="label() ?? null"
+    (change)="onToggle($event)"
+    (blur)="touch()"
+  />
+  <span class="ad-checkbox__box" aria-hidden="true">
+    <ad-icon name="check" />
+  </span>
+  <span class="ad-checkbox__text"><ng-content /></span>
+</label>

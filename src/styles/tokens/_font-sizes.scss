@@ -1,0 +1,22 @@
+:root {
+  --font-size-2xs: 0.625rem;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-md: 1.125rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 1.75rem;
+  --font-size-3xl: 2.25rem;
+  --font-size-4xl: 2.5rem;
+  --font-size-5xl: 3.25rem;
+  --font-size-6xl: 4.5rem;
+
+  --font-size-body: var(--font-size-base);
+  --font-size-h1: var(--font-size-4xl);
+  --font-size-h2: var(--font-size-2xl);
+  --font-size-h3: var(--font-size-lg);
+  --font-size-h4: var(--font-size-md);
+  --font-size-h5: var(--font-size-base);
+  --font-size-h6: var(--font-size-sm);
+}

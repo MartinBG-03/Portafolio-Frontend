@@ -1,0 +1,38 @@
+<section class="pb-carousel" aria-roledescription="carousel" [attr.aria-label]="labels().region">
+  <div #track class="pb-carousel__track" (scroll)="onScroll()">
+    <ng-content />
+  </div>
+
+  <div class="pb-carousel__controls">
+    <pb-icon-button
+      variant="neutral"
+      [label]="labels().previous"
+      [disabled]="isFirst()"
+      (click)="previous()"
+    >
+      <app-icon name="arrow-down" class="pb-carousel__arrow pb-carousel__arrow--previous" />
+    </pb-icon-button>
+
+    <div class="pb-carousel__dots">
+      @for (index of indexes(); track index) {
+        <button
+          type="button"
+          class="pb-carousel__dot"
+          [class.is-active]="index === active()"
+          [attr.aria-label]="labels().goTo + ' ' + (index + 1)"
+          [attr.aria-current]="index === active() ? 'true' : null"
+          (click)="goTo(index)"
+        ></button>
+      }
+    </div>
+
+    <pb-icon-button
+      variant="neutral"
+      [label]="labels().next"
+      [disabled]="isLast()"
+      (click)="next()"
+    >
+      <app-icon name="arrow-down" class="pb-carousel__arrow pb-carousel__arrow--next" />
+    </pb-icon-button>
+  </div>
+</section>

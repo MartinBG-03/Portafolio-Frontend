@@ -1,0 +1,93 @@
+<ad-dialog [heading]="heading()" size="lg" [(open)]="open" (confirmed)="submit()">
+  <form class="game-theme-form" novalidate [formGroup]="form">
+    <ad-switch formControlName="isEnabled">{{ texts().enabled }}</ad-switch>
+
+    <ad-form-section [heading]="texts().headline">
+      <p adFormSectionDescription class="game-theme-form__hint">{{ texts().headlineHint }}</p>
+      <ad-form-row>
+        <ad-textarea-field
+          label="ES"
+          required
+          [rows]="2"
+          [maxLength]="limits.headlineMaxLength"
+          formControlName="headlineEs"
+          [error]="errorOf('headlineEs')"
+        />
+        <ad-textarea-field
+          label="EN"
+          required
+          [rows]="2"
+          [maxLength]="limits.headlineMaxLength"
+          formControlName="headlineEn"
+          [error]="errorOf('headlineEn')"
+        />
+      </ad-form-row>
+    </ad-form-section>
+
+    <ad-form-section [heading]="texts().instructions">
+      <p adFormSectionDescription class="game-theme-form__hint">{{ texts().instructionsHint }}</p>
+      <ad-form-row>
+        <ad-textarea-field
+          label="ES"
+          required
+          [rows]="2"
+          [maxLength]="limits.instructionsMaxLength"
+          formControlName="instructionsEs"
+          [error]="errorOf('instructionsEs')"
+        />
+        <ad-textarea-field
+          label="EN"
+          required
+          [rows]="2"
+          [maxLength]="limits.instructionsMaxLength"
+          formControlName="instructionsEn"
+          [error]="errorOf('instructionsEn')"
+        />
+      </ad-form-row>
+    </ad-form-section>
+
+    <ad-form-section [heading]="texts().gameOver">
+      <p adFormSectionDescription class="game-theme-form__hint">{{ texts().gameOverHint }}</p>
+      <ad-form-row>
+        <ad-textarea-field
+          label="ES"
+          required
+          [rows]="2"
+          [maxLength]="limits.gameOverMaxLength"
+          formControlName="gameOverEs"
+          [error]="errorOf('gameOverEs')"
+        />
+        <ad-textarea-field
+          label="EN"
+          required
+          [rows]="2"
+          [maxLength]="limits.gameOverMaxLength"
+          formControlName="gameOverEn"
+          [error]="errorOf('gameOverEn')"
+        />
+      </ad-form-row>
+    </ad-form-section>
+
+    <ad-form-section [heading]="texts().retry">
+      <p adFormSectionDescription class="game-theme-form__hint">{{ texts().retryHint }}</p>
+      <ad-form-row>
+        <ad-textarea-field
+          label="ES"
+          required
+          [rows]="2"
+          [maxLength]="limits.retryMaxLength"
+          formControlName="retryEs"
+          [error]="errorOf('retryEs')"
+        />
+        <ad-textarea-field
+          label="EN"
+          required
+          [rows]="2"
+          [maxLength]="limits.retryMaxLength"
+          formControlName="retryEn"
+          [error]="errorOf('retryEn')"
+        />
+      </ad-form-row>
+    </ad-form-section>
+  </form>
+</ad-dialog>

@@ -1,0 +1,7 @@
+<div class="pb-empty-state">
+  <p class="pb-empty-state__title">{{ heading() }}</p>
+
+  @if (description(); as text) {
+    <p class="pb-empty-state__description">{{ text }}</p>
+  }
+</div>

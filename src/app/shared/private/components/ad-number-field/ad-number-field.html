@@ -1,0 +1,50 @@
+<ad-form-field
+  [controlId]="controlId"
+  [label]="label()"
+  [labelHidden]="labelHidden()"
+  [optional]="optional()"
+  [hint]="hint()"
+  [error]="error()"
+>
+  <div
+    class="ad-number-field__box"
+    [class.is-invalid]="!!error()"
+    [class.is-disabled]="isDisabled()"
+  >
+    <input
+      class="ad-number-field__control"
+      type="number"
+      inputmode="decimal"
+      [id]="controlId"
+      [value]="value() ?? ''"
+      [placeholder]="placeholder()"
+      [disabled]="isDisabled()"
+      [required]="required()"
+      [attr.min]="min() ?? null"
+      [attr.max]="max() ?? null"
+      [attr.step]="step()"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-describedby]="describedBy()"
+      (input)="onInput($event)"
+      (blur)="touch()"
+    />
+    <button
+      type="button"
+      class="ad-number-field__step"
+      [attr.aria-label]="texts().decrease"
+      [disabled]="!canStep(-1)"
+      (click)="stepBy(-1)"
+    >
+      <span class="ad-number-field__minus" aria-hidden="true"></span>
+    </button>
+    <button
+      type="button"
+      class="ad-number-field__step"
+      [attr.aria-label]="texts().increase"
+      [disabled]="!canStep(1)"
+      (click)="stepBy(1)"
+    >
+      <ad-icon name="add" />
+    </button>
+  </div>
+</ad-form-field>

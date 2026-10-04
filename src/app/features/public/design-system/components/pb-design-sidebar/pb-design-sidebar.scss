@@ -1,0 +1,49 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+  border-bottom: var(--border-width) solid var(--color-border);
+  background-color: var(--color-surface);
+
+  @include media-up(md) {
+    position: sticky;
+    inset-block-start: var(--header-height);
+    flex: 0 0 14rem;
+    align-self: flex-start;
+    height: calc(100dvh - var(--header-height));
+    overflow-y: auto;
+    border-inline-end: var(--border-width) solid var(--color-border);
+    border-bottom: 0;
+  }
+}
+
+.pb-design-sidebar {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  overflow-x: auto;
+  scrollbar-width: thin;
+
+  @include media-up(md) {
+    flex-direction: column;
+    padding: var(--space-8) var(--space-5);
+    overflow-x: visible;
+  }
+
+  &__link {
+    padding: var(--space-2);
+    border-radius: var(--radius);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    white-space: nowrap;
+    @include focus-ring;
+
+    &:hover,
+    &.is-active {
+      background-color: var(--color-card);
+      color: var(--color-text);
+    }
+  }
+}

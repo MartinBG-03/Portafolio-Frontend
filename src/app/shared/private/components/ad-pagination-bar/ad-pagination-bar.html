@@ -1,0 +1,64 @@
+<nav class="ad-pagination-bar" [attr.aria-label]="labelText()">
+  <div class="ad-pagination-bar__info">
+    <p class="ad-pagination-bar__summary" aria-live="polite">{{ summary() }}</p>
+
+    <div class="ad-pagination-bar__size">
+      <span class="ad-pagination-bar__size-label" aria-hidden="true">{{ texts().perPage }}</span>
+      <ad-select
+        class="ad-pagination-bar__size-select"
+        [label]="texts().recordsPerPage"
+        labelHidden
+        openUp
+        [options]="sizeOptions()"
+        [ngModel]="pageSize()"
+        (ngModelChange)="changeSize($event)"
+      />
+    </div>
+  </div>
+
+  <div class="ad-pagination-bar__nav">
+    <ad-icon-button
+      variant="ghost"
+      size="sm"
+      [label]="texts().first"
+      [disabled]="current() === 1"
+      (click)="go(1)"
+    >
+      <ad-icon name="arrow-first" />
+    </ad-icon-button>
+
+    <ad-icon-button
+      variant="ghost"
+      size="sm"
+      [label]="texts().previous"
+      [disabled]="current() === 1"
+      (click)="go(current() - 1)"
+    >
+      <ad-icon name="arrow-left" />
+    </ad-icon-button>
+
+    <span class="ad-pagination-bar__page" aria-live="polite">
+      {{ current() }} / {{ totalPages() }}
+    </span>
+
+    <ad-icon-button
+      variant="ghost"
+      size="sm"
+      [label]="texts().next"
+      [disabled]="current() === totalPages()"
+      (click)="go(current() + 1)"
+    >
+      <ad-icon name="arrow-right" />
+    </ad-icon-button>
+
+    <ad-icon-button
+      variant="ghost"
+      size="sm"
+      [label]="texts().last"
+      [disabled]="current() === totalPages()"
+      (click)="go(totalPages())"
+    >
+      <ad-icon name="arrow-last" />
+    </ad-icon-button>
+  </div>
+</nav>

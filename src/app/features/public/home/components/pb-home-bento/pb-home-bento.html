@@ -1,0 +1,58 @@
+<section class="container pb-home-bento" [attr.aria-label]="t().home.bento.label">
+  <div class="pb-home-bento__grid">
+    <article class="pb-home-bento__tile pb-home-bento__tile--about">
+      <div class="pb-home-bento__top">
+        <span class="pb-home-bento__photo" aria-hidden="true">{{ t().menus.about.photo }}</span>
+        <pb-circle-arrow tone="light" />
+      </div>
+      <p class="pb-home-bento__quote">
+        <a class="pb-home-bento__link" routerLink="/about">{{ t().menus.about.quote }}</a>
+      </p>
+    </article>
+
+    <article class="pb-home-bento__tile pb-home-bento__tile--services">
+      <h2 class="pb-home-bento__title">{{ t().home.bento.servicesHeading }}</h2>
+      <ul class="pb-home-bento__rows">
+        @for (service of services(); track service.id) {
+          <li class="pb-home-bento__row">
+            <span [class]="'pb-home-bento__icon pb-home-bento__icon--' + service.tone">
+              @if (service.icon; as name) {
+                <app-icon [name]="name" />
+              }
+            </span>
+            <span class="pb-home-bento__text">
+              <a
+                class="pb-home-bento__link pb-home-bento__row-title"
+                [routerLink]="service.path"
+                [queryParams]="service.queryParams"
+              >
+                {{ service.title }}
+              </a>
+              <span class="pb-home-bento__row-description">{{ service.description }}</span>
+            </span>
+            <pb-circle-arrow />
+          </li>
+        }
+      </ul>
+    </article>
+
+    <article class="pb-home-bento__tile pb-home-bento__tile--stat">
+      <p class="pb-home-bento__stat-label">{{ t().home.bento.projectsStat }}</p>
+      <p class="pb-home-bento__stat-number">{{ projectCount }}</p>
+      <div class="pb-home-bento__bars" aria-hidden="true">
+        @for (height of bars; track $index) {
+          <span class="pb-home-bento__bar" [style.block-size.%]="height"></span>
+        }
+      </div>
+    </article>
+
+    <article class="pb-home-bento__tile pb-home-bento__tile--stack">
+      <h2 class="pb-home-bento__title">{{ t().home.bento.stackHeading }}</h2>
+      <ul class="pb-home-bento__chips">
+        @for (item of stack; track item) {
+          <li><pb-chip>{{ item }}</pb-chip></li>
+        }
+      </ul>
+    </article>
+  </div>
+</section>

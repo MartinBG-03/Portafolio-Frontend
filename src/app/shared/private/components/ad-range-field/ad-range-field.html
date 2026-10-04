@@ -1,0 +1,25 @@
+<ad-form-field
+  [controlId]="controlId"
+  [label]="label()"
+  [labelHidden]="labelHidden()"
+  [optional]="optional()"
+  [hint]="hint()"
+  [error]="error()"
+>
+  <div class="ad-range-field__row" [class.is-disabled]="isDisabled()">
+    <input
+      class="ad-range-field__control"
+      type="range"
+      [id]="controlId"
+      [min]="min()"
+      [max]="max()"
+      [step]="step()"
+      [value]="value() ?? min()"
+      [disabled]="isDisabled()"
+      [attr.aria-describedby]="describedBy()"
+      (input)="onInput($event)"
+      (change)="touch()"
+    />
+    <span class="ad-range-field__value">{{ displayValue() }}</span>
+  </div>
+</ad-form-field>

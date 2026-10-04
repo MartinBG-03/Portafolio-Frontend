@@ -1,0 +1,207 @@
+@use 'abstracts' as *;
+
+.design-system-page {
+  display: flex;
+  flex-direction: column;
+
+  @include media-up(md) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  &__content {
+    display: grid;
+    flex: 1;
+    gap: var(--space-10);
+    width: 100%;
+    min-width: 0;
+    max-width: 60rem;
+    margin-inline: auto;
+    padding: var(--space-8) var(--space-4) var(--space-16);
+
+    @include media-up(md) {
+      padding: var(--space-12) var(--space-8) var(--space-16);
+    }
+  }
+
+  &__caption {
+    display: block;
+    color: var(--color-text-subtle);
+    font-size: var(--font-size-xs);
+  }
+
+  &__type {
+    margin: 0;
+
+    &--h1 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-h1);
+      font-weight: var(--font-weight-extrabold);
+      line-height: 1.2;
+    }
+
+    &--h2 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-h2);
+      font-weight: var(--font-weight-bold);
+      line-height: 1.2;
+    }
+
+    &--h3 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-h3);
+      font-weight: var(--font-weight-semibold);
+      line-height: 1.2;
+    }
+
+    &--body {
+      color: var(--color-text-muted);
+    }
+  }
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  &__row-label {
+    flex: 0 0 6rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &__item {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-2);
+    margin: 0;
+  }
+
+  &__fields {
+    display: grid;
+    gap: var(--space-5);
+
+    @include media-up(sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__toasts {
+    display: grid;
+    gap: var(--space-3);
+
+    @include media-up(md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__swatches {
+    @include reset-list;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+    margin-block-start: var(--space-3);
+
+    @include media-up(sm) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include media-up(md) {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+
+  &__swatch {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  &__color {
+    height: var(--space-12);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  &__name {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-transform: capitalize;
+  }
+
+  &__code {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+  }
+
+  &__previews {
+    display: grid;
+    gap: var(--space-4);
+
+    @include media-up(sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__preview {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+    padding: var(--space-5);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+
+    &--light {
+      color-scheme: light;
+    }
+
+    &--dark {
+      color-scheme: dark;
+    }
+  }
+
+  &__preview-scheme {
+    color: var(--color-text-subtle);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  &__preview-title {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &__preview-text {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  &__preview-accent {
+    margin: 0;
+    color: var(--color-accent);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &__surface {
+    padding: var(--space-3);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius);
+    background-color: var(--color-surface);
+  }
+
+  &__frame {
+    overflow: hidden;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+}

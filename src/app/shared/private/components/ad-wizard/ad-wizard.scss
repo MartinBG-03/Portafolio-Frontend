@@ -1,0 +1,197 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.ad-wizard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+
+  &--side {
+    @include media-up('md') {
+      display: grid;
+      grid-template-columns: 15rem 1fr;
+      grid-template-areas: 'nav body' 'footer footer';
+      align-items: start;
+      column-gap: var(--space-8);
+      row-gap: var(--space-6);
+
+      .ad-wizard__nav {
+        grid-area: nav;
+      }
+
+      .ad-wizard__body {
+        grid-area: body;
+      }
+
+      .ad-wizard__footer {
+        grid-area: footer;
+      }
+
+      .ad-wizard__steps {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .ad-wizard__step {
+        position: relative;
+        flex: none;
+        padding-bottom: var(--space-5);
+
+        &:last-child {
+          padding-bottom: 0;
+        }
+
+        &:not(:last-child)::after {
+          content: '';
+          position: absolute;
+          top: var(--space-8);
+          bottom: 0;
+          left: calc(var(--space-8) / 2 - 1px);
+          width: 2px;
+          background-color: var(--color-border);
+        }
+
+        &.is-complete:not(:last-child)::after {
+          background-color: var(--color-success);
+        }
+      }
+
+      .ad-wizard__step-button {
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        background-color: transparent;
+
+        &:hover:not(:disabled) {
+          background-color: transparent;
+        }
+
+        &:hover:not(:disabled) .ad-wizard__step-label {
+          color: var(--color-primary);
+        }
+      }
+
+      .ad-wizard__step.is-complete .ad-wizard__marker {
+        background-color: var(--color-success);
+        color: var(--color-bg);
+      }
+    }
+  }
+
+  &__steps {
+    @include reset-list;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  &__step {
+    flex: 1 1 10rem;
+  }
+
+  &__step-button {
+    @include reset-button;
+
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    height: 100%;
+    padding: var(--space-3);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-align: start;
+    @include focus-ring;
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-surface);
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.6;
+    }
+  }
+
+  &__marker {
+    --icon-size: var(--space-4);
+
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-8);
+    height: var(--space-8);
+    border: var(--border-width-strong) solid var(--color-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+  }
+
+  &__step.is-current &__step-button {
+    border-color: var(--color-primary);
+  }
+
+  &__step.is-current &__marker {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-bg);
+  }
+
+  &__step.is-complete &__marker {
+    border-color: var(--color-success);
+    color: var(--color-success);
+  }
+
+  &__step-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__step-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &__step-description {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  &__progress {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  &__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: var(--border-width) solid var(--color-border);
+  }
+
+  &__footer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+}

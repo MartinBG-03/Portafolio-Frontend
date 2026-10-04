@@ -1,0 +1,29 @@
+<header class="pb-header">
+  <div class="container pb-header__inner">
+    <a
+      class="pb-header__brand"
+      routerLink="/"
+      [attr.aria-label]="siteName + ' - ' + t().nav.home"
+    >
+      <pb-logo />
+    </a>
+
+    <button
+      type="button"
+      class="pb-header__menu-button"
+      aria-controls="pb-navbar-list"
+      [attr.aria-expanded]="navbar.mobileOpen()"
+      [attr.aria-label]="navbar.mobileOpen() ? t().nav.menuClose : t().nav.menuOpen"
+      (click)="navbar.toggleMobile()"
+    >
+      <app-icon name="hamburger" />
+    </button>
+
+    <pb-navbar #navbar class="pb-header__navbar" [label]="t().nav.label" [items]="navItems()" />
+
+    <div class="pb-header__actions">
+      <pb-language-switch />
+      <pb-theme-toggle />
+    </div>
+  </div>
+</header>

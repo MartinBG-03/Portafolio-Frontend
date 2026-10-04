@@ -1,0 +1,37 @@
+<div class="pb-language-switch" [class.is-open]="open()">
+  <button
+    type="button"
+    class="pb-language-switch__trigger"
+    [adTooltip]="open() ? '' : tooltip()"
+    [attr.aria-label]="tooltip()"
+    [attr.aria-expanded]="open()"
+    (click)="toggle()"
+  >
+    <app-icon name="globe" />
+    <span class="pb-language-switch__badge" aria-hidden="true">
+      {{ current().code.toUpperCase() }}
+    </span>
+  </button>
+
+  <div class="pb-language-switch__options" [attr.inert]="open() ? null : ''">
+    <div
+      class="pb-language-switch__group"
+      role="group"
+      [attr.aria-label]="languageService.t().language.label"
+    >
+      @for (option of options; track option.code) {
+        <button
+          type="button"
+          class="pb-language-switch__button"
+          [class.is-active]="languageService.language() === option.code"
+          [attr.aria-pressed]="languageService.language() === option.code"
+          [attr.aria-label]="option.name"
+          [attr.lang]="option.code"
+          (click)="select(option.code, $event)"
+        >
+          {{ option.code.toUpperCase() }}
+        </button>
+      }
+    </div>
+  </div>
+</div>

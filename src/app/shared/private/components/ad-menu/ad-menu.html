@@ -1,0 +1,39 @@
+<ad-icon-button
+  variant="ghost"
+  size="sm"
+  popup="menu"
+  [label]="label()"
+  [expanded]="open()"
+  (click)="toggle()"
+  (keydown.arrowdown)="openFromKeyboard($event)"
+>
+  <ad-icon [name]="icon()" />
+</ad-icon-button>
+
+@if (open()) {
+  <div
+    #panel
+    class="ad-menu__panel"
+    role="menu"
+    [attr.aria-label]="label()"
+    [style.top.px]="position().top"
+    [style.left.px]="position().left"
+    (keydown)="onKeydown($event)"
+  >
+    @for (item of items(); track item.key) {
+      <button
+        type="button"
+        role="menuitem"
+        class="ad-menu__item"
+        [class.is-danger]="item.tone === 'danger'"
+        [disabled]="item.disabled"
+        (click)="choose(item)"
+      >
+        @if (item.icon; as name) {
+          <ad-icon [name]="name" />
+        }
+        {{ item.label }}
+      </button>
+    }
+  </div>
+}

@@ -1,0 +1,78 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.ad-page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+
+  @include media-up(md) {
+    flex-wrap: nowrap;
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--space-12);
+    height: var(--space-12);
+    border-radius: var(--radius-xl);
+    background-color: var(--color-tone-accent);
+    color: var(--color-accent-text);
+    font-size: var(--font-size-xl);
+
+    ad-icon {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__glyph {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-extrabold);
+  }
+
+  &__text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: var(--font-size-xl);
+  }
+
+  &__description {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+
+    @include media-up(md) {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-basis: 100%;
+    min-width: 0;
+
+    &:empty {
+      display: none;
+    }
+
+    @include media-up(md) {
+      flex-basis: auto;
+      flex-shrink: 0;
+    }
+  }
+}

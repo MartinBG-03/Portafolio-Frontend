@@ -1,0 +1,39 @@
+<pb-page-header
+  [heading]="t().nav.projects"
+  [description]="t().projects.description"
+  [breadcrumbs]="breadcrumbs()"
+  icon="code"
+/>
+
+<section class="container projects-page">
+  <div class="projects-page__filters" role="group" [attr.aria-label]="t().projects.filterLabel">
+    @for (option of filterOptions(); track option.value) {
+      <pb-chip
+        selectable
+        controlled
+        [selected]="filter() === option.value"
+        (pressed)="select(option.value)"
+      >
+        {{ option.label }}
+      </pb-chip>
+    }
+  </div>
+
+  @if (cards().length > 0) {
+    <ul class="projects-page__grid">
+      @for (card of cards(); track card.id) {
+        <li>
+          <pb-project-card
+            [category]="card.category"
+            [categoryLabel]="card.categoryLabel"
+            [heading]="card.title"
+            [description]="card.description"
+            [imageLabel]="t().projects.imagePlaceholder"
+          />
+        </li>
+      }
+    </ul>
+  } @else {
+    <pb-empty-state [heading]="t().projects.empty.title" [description]="t().projects.empty.description" />
+  }
+</section>

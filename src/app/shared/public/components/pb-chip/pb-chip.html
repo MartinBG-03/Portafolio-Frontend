@@ -1,0 +1,36 @@
+<span
+  [class]="chipClass()"
+  [class.is-selected]="selected()"
+  [class.is-disabled]="disabled()"
+  [class.is-interactive]="selectable()"
+>
+  @if (selectable()) {
+    <button
+      type="button"
+      class="pb-chip__action"
+      [attr.aria-pressed]="selected()"
+      [disabled]="disabled()"
+      (click)="onClick()"
+    >
+      <ng-container [ngTemplateOutlet]="content" />
+    </button>
+  } @else {
+    <span class="pb-chip__text">
+      <ng-container [ngTemplateOutlet]="content" />
+    </span>
+  }
+
+  @if (removable()) {
+    <button
+      type="button"
+      class="pb-chip__remove"
+      [attr.aria-label]="removeAriaLabel()"
+      [disabled]="disabled()"
+      (click)="removed.emit()"
+    >
+      <app-icon name="close" />
+    </button>
+  }
+</span>
+
+<ng-template #content><ng-content /></ng-template>

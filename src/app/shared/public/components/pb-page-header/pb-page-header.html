@@ -1,0 +1,21 @@
+<header class="pb-page-header">
+  @if (icon(); as name) {
+    <app-icon class="pb-page-header__art" [name]="name" />
+  }
+
+  <div class="container pb-page-header__inner">
+    @if (breadcrumbs().length > 0) {
+      <pb-breadcrumbs class="pb-page-header__breadcrumbs" [items]="breadcrumbs()" />
+    }
+
+    @if (headingLevel() === 1) {
+      <h1 class="pb-page-header__title">{{ heading() }}</h1>
+    } @else {
+      <h2 class="pb-page-header__title pb-page-header__title--display">{{ heading() }}</h2>
+    }
+
+    @if (description(); as text) {
+      <p class="pb-page-header__description" [class.pb-page-header__description--wide]="wideDescription()">{{ text }}</p>
+    }
+  </div>
+</header>

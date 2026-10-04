@@ -1,0 +1,27 @@
+@use 'abstracts' as *;
+
+.projects-page {
+  padding-block: var(--space-6) var(--space-12);
+
+  &__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-block-end: var(--space-6);
+  }
+
+  &__grid {
+    @include reset-list;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+
+    @include media-up(sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media-up(md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}

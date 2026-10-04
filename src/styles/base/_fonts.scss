@@ -1,0 +1,26 @@
+$fonts-path: '../../assets/fonts';
+
+@mixin font-face($family, $file, $weight, $style: normal) {
+  @font-face {
+    font-family: $family;
+    src: url('#{$fonts-path}/#{$file}') format('truetype');
+    font-weight: $weight;
+    font-style: $style;
+    font-display: swap;
+  }
+}
+
+@include font-face('Inter', 'inter/Inter-VariableFont_opsz,wght.ttf', 100 900);
+
+@include font-face(
+  'Plus Jakarta Sans',
+  'plus-jakarta-sans/PlusJakartaSans-VariableFont_wght.ttf',
+  200 800
+);
+
+@include font-face(
+  'Plus Jakarta Sans',
+  'plus-jakarta-sans/PlusJakartaSans-Italic-VariableFont_wght.ttf',
+  200 800,
+  italic
+);

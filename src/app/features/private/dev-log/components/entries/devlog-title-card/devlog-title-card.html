@@ -1,0 +1,106 @@
+<header class="devlog-title-card__header">
+  @if (formattedDate(); as date) {
+    <time class="devlog-title-card__date" [attr.datetime]="isoDate()">{{ date }}</time>
+  }
+
+  <span class="devlog-title-card__rule" aria-hidden="true"></span>
+
+  @if (currentCategory(); as current) {
+    <div class="devlog-title-card__category">
+      @if (categories().length > 1) {
+        <button
+          type="button"
+          class="devlog-title-card__cat-nav"
+          [attr.aria-label]="texts().previousCategory"
+          (click)="previousCategory()"
+        >
+          <ad-icon name="chevron-left" />
+        </button>
+      }
+
+      <span class="devlog-title-card__cat-label">{{ current.label }}</span>
+
+      @if (categories().length > 1) {
+        <button
+          type="button"
+          class="devlog-title-card__cat-nav"
+          [attr.aria-label]="texts().nextCategory"
+          (click)="nextCategory()"
+        >
+          <ad-icon name="chevron-right" />
+        </button>
+      }
+    </div>
+  }
+</header>
+
+<article
+  #card
+  class="devlog-title-card"
+  [class.devlog-title-card--actions-left]="buttonsPosition() === 'left'"
+  [attr.aria-label]="title()"
+>
+  @if (shapePath(); as path) {
+    <svg
+      class="devlog-title-card__shape"
+      aria-hidden="true"
+      [attr.width]="size().width"
+      [attr.height]="size().height"
+      [attr.viewBox]="viewBox()"
+    >
+      @if (coverImageUrl(); as url) {
+        <defs>
+          <pattern
+            [attr.id]="patternId"
+            patternUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            [attr.width]="size().width"
+            [attr.height]="size().height"
+          >
+            <image
+              [attr.href]="url"
+              x="0"
+              y="0"
+              [attr.width]="size().width"
+              [attr.height]="size().height"
+              preserveAspectRatio="xMidYMid slice"
+            />
+          </pattern>
+        </defs>
+        <path class="devlog-title-card__surface" [attr.d]="path" />
+        <path [attr.d]="path" [attr.fill]="'url(#' + patternId + ')'" />
+      } @else {
+        <path class="devlog-title-card__surface" [attr.d]="path" />
+      }
+    </svg>
+  }
+
+  <div #actions class="devlog-title-card__actions">
+    <button
+      type="button"
+      class="devlog-title-card__action devlog-title-card__action--pending"
+      [adTooltip]="texts().comingSoon"
+    >
+      <ad-icon name="download" />
+    </button>
+
+    <button
+      type="button"
+      class="devlog-title-card__action devlog-title-card__action--share"
+      [class.devlog-title-card__action--disabled]="!shareUrl()"
+      [adTooltip]="shareUrl() ? texts().share : texts().shareUnavailable"
+      (click)="onShare()"
+    >
+      <ad-icon name="share" />
+    </button>
+
+    <button
+      type="button"
+      class="devlog-title-card__action devlog-title-card__action--pending"
+      [adTooltip]="texts().comingSoon"
+    >
+      <ad-icon name="dots" />
+    </button>
+  </div>
+</article>

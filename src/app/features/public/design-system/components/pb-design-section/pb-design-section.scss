@@ -1,0 +1,32 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.pb-design-section {
+  scroll-margin-block-start: calc(var(--header-height) + var(--space-6));
+
+  &__label {
+    margin: 0 0 var(--space-4);
+    color: var(--color-accent);
+    font-family: var(--font-body);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  &__card {
+    display: grid;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background-color: var(--color-card);
+
+    @include media-up(md) {
+      padding: var(--space-8);
+    }
+  }
+}

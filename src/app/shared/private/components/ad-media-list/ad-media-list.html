@@ -1,0 +1,91 @@
+@if (items().length > 0) {
+  <ul class="ad-media-list">
+    @for (item of items(); track item.key; let first = $first; let last = $last) {
+      <li class="ad-media-list__item" [class.is-inactive]="item.active === false">
+        <div class="ad-media-list__preview">
+          @switch (item.kind) {
+            @case ('image') {
+              <img class="ad-media-list__image" [src]="item.url" [alt]="item.name" loading="lazy" />
+            }
+            @case ('video') {
+              <video class="ad-media-list__video" [src]="item.url" controls preload="metadata"></video>
+            }
+            @case ('audio') {
+              <div class="ad-media-list__audio">
+                <ad-icon [name]="icons.audio" />
+                <audio [src]="item.url" controls preload="none"></audio>
+              </div>
+            }
+            @default {
+              <ad-icon class="ad-media-list__file-icon" [name]="icons.file" />
+            }
+          }
+          @if (item.active === false) {
+            <ad-badge class="ad-media-list__hidden" [dot]="false">{{ texts().hidden }}</ad-badge>
+          }
+        </div>
+
+        <div class="ad-media-list__info">
+          <a
+            class="ad-media-list__name"
+            target="_blank"
+            rel="noopener noreferrer"
+            [href]="item.url"
+            [attr.aria-label]="texts().open(item.name)"
+          >
+            <ad-icon [name]="icons[item.kind]" />
+            <span>{{ item.name }}</span>
+          </a>
+          @if (item.size !== undefined) {
+            <span class="ad-media-list__size">{{ formatSize(item.size) }}</span>
+          }
+        </div>
+
+        @if (toggleable() || reorderable() || removable()) {
+          <div class="ad-media-list__actions">
+            @if (toggleable()) {
+              <ad-switch
+                class="ad-media-list__toggle"
+                [checked]="item.active !== false"
+                [label]="texts().toggle(item.name)"
+                (checkedChange)="activeChange.emit({ key: item.key, active: $event })"
+              />
+            }
+            @if (reorderable()) {
+              <ad-icon-button
+                variant="ghost"
+                size="sm"
+                [label]="texts().moveUp(item.name)"
+                [disabled]="first"
+                (click)="moved.emit({ key: item.key, offset: -1 })"
+              >
+                <ad-icon name="arrow-up" />
+              </ad-icon-button>
+              <ad-icon-button
+                variant="ghost"
+                size="sm"
+                [label]="texts().moveDown(item.name)"
+                [disabled]="last"
+                (click)="moved.emit({ key: item.key, offset: 1 })"
+              >
+                <ad-icon name="arrow-down" />
+              </ad-icon-button>
+            }
+            @if (removable()) {
+              <ad-icon-button
+                variant="ghost"
+                size="sm"
+                [label]="texts().remove(item.name)"
+                (click)="removed.emit(item.key)"
+              >
+                <ad-icon name="trash" />
+              </ad-icon-button>
+            }
+          </div>
+        }
+      </li>
+    }
+  </ul>
+} @else {
+  <p class="ad-media-list__empty">{{ emptyMessage() }}</p>
+}

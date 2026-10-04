@@ -1,0 +1,124 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.ad-media-list {
+  @include reset-list;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: var(--space-3);
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-card);
+  }
+
+  &__preview {
+    --icon-size: var(--space-10, 2.5rem);
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: var(--color-surface);
+    color: var(--color-text-muted);
+  }
+
+  &__image,
+  &__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__audio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    width: 100%;
+    padding: var(--space-3);
+
+    audio {
+      width: 100%;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-3) var(--space-3) 0;
+    min-width: 0;
+  }
+
+  &__name {
+    --icon-size: var(--space-4);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: 0;
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    @include focus-ring;
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &:hover span {
+      text-decoration: underline;
+    }
+  }
+
+  &__size {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-1);
+    padding: var(--space-2);
+  }
+
+  &__toggle {
+    margin-inline-end: auto;
+  }
+
+  &__hidden {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-2);
+    z-index: 1;
+  }
+
+  &__item.is-inactive &__preview > :not(.ad-media-list__hidden),
+  &__item.is-inactive &__info {
+    opacity: 0.5;
+  }
+
+  &__empty {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+}

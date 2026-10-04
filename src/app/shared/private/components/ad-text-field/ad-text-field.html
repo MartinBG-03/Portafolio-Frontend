@@ -1,0 +1,39 @@
+<ad-form-field
+  [controlId]="controlId"
+  [label]="label()"
+  [labelHidden]="labelHidden()"
+  [optional]="optional()"
+  [hint]="hint()"
+  [error]="error()"
+>
+  <div class="ad-text-field__box" [class.is-invalid]="!!error()" [class.is-disabled]="isDisabled()">
+    @if (prefix(); as text) {
+      <span class="ad-text-field__prefix">{{ text }}</span>
+    }
+    <input
+      class="ad-text-field__control"
+      [id]="controlId"
+      [type]="resolvedType()"
+      [value]="value() ?? ''"
+      [placeholder]="placeholder()"
+      [disabled]="isDisabled()"
+      [required]="required()"
+      [attr.autocomplete]="autocomplete()"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-describedby]="describedBy()"
+      (input)="onInput($event)"
+      (blur)="touch()"
+    />
+    @if (isPassword()) {
+      <ad-icon-button
+        class="ad-text-field__reveal"
+        variant="ghost"
+        size="sm"
+        [label]="revealed() ? resolvedHideLabel() : resolvedRevealLabel()"
+        (click)="toggleReveal()"
+      >
+        <ad-icon [name]="revealed() ? 'eye-slash' : 'eye'" />
+      </ad-icon-button>
+    }
+  </div>
+</ad-form-field>

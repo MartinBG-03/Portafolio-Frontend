@@ -1,0 +1,34 @@
+<ad-form-field
+  [controlId]="controlId"
+  [label]="label()"
+  [labelHidden]="labelHidden()"
+  [optional]="optional()"
+  [hint]="hint()"
+  [error]="error()"
+>
+  <div
+    class="ad-textarea-field__box"
+    [class.is-invalid]="!!error()"
+    [class.is-disabled]="isDisabled()"
+  >
+    <textarea
+      class="ad-textarea-field__control"
+      [id]="controlId"
+      [rows]="rows()"
+      [value]="value() ?? ''"
+      [placeholder]="placeholder()"
+      [disabled]="isDisabled()"
+      [required]="required()"
+      autocomplete="off"
+      [attr.maxlength]="maxLength() ?? null"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-describedby]="describedBy()"
+      (input)="onInput($event)"
+      (blur)="touch()"
+    ></textarea>
+  </div>
+
+  @if (maxLength(); as max) {
+    <span class="ad-textarea-field__counter">{{ length() }} / {{ max }}</span>
+  }
+</ad-form-field>

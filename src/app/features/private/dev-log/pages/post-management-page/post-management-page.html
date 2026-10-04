@@ -1,0 +1,51 @@
+<ad-page-header
+  [heading]="nav().nav.posts"
+  icon="post-management"
+  [description]="nav().descriptions.posts"
+/>
+
+<ad-card>
+  <ad-table
+    searchable
+    columnsConfigurable
+    [caption]="texts().caption"
+    [emptyText]="texts().emptyText"
+    [searchPlaceholder]="texts().searchPlaceholder"
+    [rowActionsLabel]="texts().rowActionsLabel"
+    [columns]="columns()"
+    [rows]="rows()"
+    [rowKey]="rowKey"
+    [totalRecords]="totalRecords()"
+    [rowActions]="rowActions()"
+    [(search)]="search"
+    [(filters)]="filters"
+    [(page)]="page"
+    [(pageSize)]="pageSize"
+    (rowAction)="onRowAction($event)"
+  >
+    <ng-template adTableToolbar>
+      <ad-button (click)="openCreate()">
+        <ad-icon name="add" />
+        {{ texts().newEntry }}
+      </ad-button>
+    </ng-template>
+
+    <ng-template adTableCell="status" let-row>
+      <ad-badge [dot]="false" [tone]="row.status ? 'success' : 'neutral'">
+        {{ row.status ? texts().active : texts().inactive }}
+      </ad-badge>
+    </ng-template>
+
+    <ng-template adTableCell="dateCreated" let-row>{{ dateOf(row) }}</ng-template>
+  </ad-table>
+</ad-card>
+
+<ad-confirm-dialog
+  [heading]="confirmation()?.heading ?? ''"
+  [confirmLabel]="confirmation()?.confirmLabel"
+  [tone]="confirmation()?.tone ?? 'primary'"
+  [(open)]="confirmOpen"
+  (confirmed)="confirmAction()"
+>
+  {{ confirmationMessage() }}
+</ad-confirm-dialog>

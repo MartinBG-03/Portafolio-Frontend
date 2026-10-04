@@ -1,0 +1,110 @@
+<ad-form-field
+  [controlId]="controlId"
+  [label]="label()"
+  [labelHidden]="labelHidden()"
+  [optional]="optional()"
+  [hint]="hint()"
+  [error]="shownError()"
+>
+  <div class="ad-date-field__wrapper">
+    <div
+      class="ad-date-field__box"
+      [class.is-invalid]="!!shownError()"
+      [class.is-disabled]="isDisabled()"
+    >
+      <input
+        class="ad-date-field__control"
+        type="text"
+        inputmode="numeric"
+        autocomplete="off"
+        [id]="controlId"
+        [value]="text()"
+        [placeholder]="placeholder() || texts().placeholder"
+        [disabled]="isDisabled()"
+        [required]="required()"
+        [attr.aria-invalid]="shownError() ? 'true' : null"
+        [attr.aria-describedby]="describedByDate()"
+        (input)="onTextInput($event)"
+        (change)="onTextCommit()"
+        (keydown.enter)="onTextCommit()"
+        (blur)="onBlur()"
+      />
+      <button
+        type="button"
+        class="ad-date-field__toggle"
+        [attr.aria-label]="texts().choose"
+        aria-haspopup="dialog"
+        [attr.aria-expanded]="open()"
+        [disabled]="isDisabled()"
+        (click)="toggle()"
+      >
+        <ad-icon name="calendar" />
+      </button>
+    </div>
+
+    @if (open()) {
+      <div class="ad-date-field__panel" role="dialog" [attr.aria-label]="texts().choose">
+        <div class="ad-date-field__header">
+          <ad-icon-button variant="ghost" size="sm" [label]="texts().previousMonth" (click)="shiftMonth(-1)">
+            <ad-icon name="arrow-left" />
+          </ad-icon-button>
+          <strong class="ad-date-field__month" aria-live="polite">{{ monthTitle() }}</strong>
+          <ad-icon-button variant="ghost" size="sm" [label]="texts().nextMonth" (click)="shiftMonth(1)">
+            <ad-icon name="arrow-right" />
+          </ad-icon-button>
+        </div>
+
+        <table class="ad-date-field__grid" role="grid" [attr.aria-label]="monthTitle()">
+          <thead>
+            <tr>
+              @for (letter of weekdays(); track $index) {
+                <th scope="col" class="ad-date-field__weekday">{{ letter }}</th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (week of grid(); track week[0].iso) {
+              <tr>
+                @for (day of week; track day.iso) {
+                  <td>
+                    <button
+                      type="button"
+                      class="ad-date-field__day"
+                      [class.is-outside]="!day.inMonth"
+                      [class.is-selected]="day.iso === value()"
+                      [class.is-today]="day.iso === today"
+                      [class.is-disabled]="isDisabledDay(day.iso)"
+                      [attr.tabindex]="day.iso === focusedDate() ? 0 : -1"
+                      [attr.aria-label]="dayLabel(day.iso)"
+                      [attr.aria-pressed]="day.iso === value()"
+                      [attr.aria-current]="day.iso === today ? 'date' : null"
+                      [attr.aria-disabled]="isDisabledDay(day.iso) ? 'true' : null"
+                      (click)="pick(day)"
+                      (keydown)="onGridKeydown($event)"
+                    >
+                      {{ day.day }}
+                    </button>
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        <div class="ad-date-field__footer">
+          <ad-button
+            variant="tertiary"
+            size="sm"
+            [disabled]="isDisabledDay(today)"
+            (click)="pickToday()"
+          >
+            {{ texts().today }}
+          </ad-button>
+          @if (!required()) {
+            <ad-button variant="tertiary" size="sm" (click)="clearDate()">{{ texts().clear }}</ad-button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</ad-form-field>

@@ -1,0 +1,232 @@
+<ad-page-header [heading]="heading()" icon="post-management" />
+
+<form class="post-form" novalidate [formGroup]="form">
+  <ad-wizard
+    layout="side"
+    [steps]="steps()"
+    [label]="texts().wizardLabel"
+    [linear]="linear()"
+    [busy]="saving()"
+    [finishLabel]="texts().save"
+    [cancelLabel]="texts().cancel"
+    [validateStep]="validateStep"
+    [(active)]="activeStep"
+    (finished)="onFinish()"
+    (cancelled)="onCancel()"
+  >
+    <ng-template adWizardStep="general">
+      <ad-form-section [heading]="texts().stepGeneral">
+        <ad-form-row>
+          <ad-text-field
+            [label]="texts().titleEs"
+            required
+            formControlName="titleEs"
+            [error]="errorOf('titleEs')"
+          />
+          <ad-text-field
+            [label]="texts().titleEn"
+            required
+            formControlName="titleEn"
+            [error]="errorOf('titleEn')"
+          />
+        </ad-form-row>
+
+        <ad-form-row>
+          <ad-textarea-field
+            [label]="texts().descriptionEs"
+            required
+            [rows]="3"
+            [maxLength]="limits.descriptionMaxLength"
+            formControlName="descriptionEs"
+            [error]="errorOf('descriptionEs')"
+          />
+          <ad-textarea-field
+            [label]="texts().descriptionEn"
+            required
+            [rows]="3"
+            [maxLength]="limits.descriptionMaxLength"
+            formControlName="descriptionEn"
+            [error]="errorOf('descriptionEn')"
+          />
+        </ad-form-row>
+      </ad-form-section>
+
+      <ad-form-section [heading]="texts().categories">
+        <ad-chip-group
+          [label]="texts().categories"
+          required
+          [options]="categoryChipOptions()"
+          [emptyText]="texts().categoriesEmpty"
+          [error]="errorOf('categoryIds')"
+          formControlName="categoryIds"
+        />
+      </ad-form-section>
+
+      <ad-form-section [heading]="texts().displayDate">
+        <ad-form-row>
+          <ad-date-field
+            [label]="texts().displayDate"
+            [hint]="texts().displayDateHint"
+            required
+            formControlName="displayDate"
+            [error]="errorOf('displayDate')"
+          />
+
+          <ad-form-field controlId="isFeatured" [label]="texts().isFeatured" labelHidden [hint]="texts().isFeaturedHint">
+            <ad-switch formControlName="isFeatured">{{ texts().isFeatured }}</ad-switch>
+          </ad-form-field>
+        </ad-form-row>
+      </ad-form-section>
+    </ng-template>
+
+    <ng-template adWizardStep="content">
+      <ad-form-section [heading]="texts().stepContent">
+        <ad-rich-text-editor
+          [label]="texts().bodyEs"
+          required
+          [tools]="richTextTools"
+          formControlName="bodyEs"
+          [error]="errorOf('bodyEs')"
+        />
+        <ad-rich-text-editor
+          [label]="texts().bodyEn"
+          required
+          [tools]="richTextTools"
+          formControlName="bodyEn"
+          [error]="errorOf('bodyEn')"
+        />
+      </ad-form-section>
+    </ng-template>
+
+    <ng-template adWizardStep="cover">
+      <ad-form-section [heading]="texts().coverInside">
+        <ad-file-picker
+          [label]="texts().coverInside"
+          [hint]="texts().coverInsideHint"
+          accept="image/*"
+          [filled]="!!coverImageUrl()"
+          [busy]="coverUploading()"
+          [error]="errorOf('coverImagePath')"
+          (filesSelected)="onCoverSelected($event)"
+        >
+          @if (coverImageUrl(); as url) {
+            <img class="post-form__cover-preview" [src]="url" alt="" />
+          }
+        </ad-file-picker>
+
+        <ad-radio-group
+          [label]="texts().titleDesign"
+          orientation="horizontal"
+          [options]="titleDesignOptions()"
+          formControlName="titleDesign"
+        />
+      </ad-form-section>
+
+      <ad-form-section [heading]="texts().preview">
+        <ad-devlog-title-card
+          [title]="previewTitle()"
+          [categories]="previewCategories()"
+          [date]="previewDate()"
+          [coverImageUrl]="coverImageUrl()"
+          [buttonsPosition]="previewButtonsPosition()"
+        />
+      </ad-form-section>
+
+      <ad-form-section [heading]="texts().coverOutside">
+        <ad-file-picker
+          [label]="texts().coverOutside"
+          [hint]="texts().coverOutsideHint"
+          accept="image/*"
+          [filled]="!!listCoverImageUrl()"
+          [busy]="listCoverUploading()"
+          [error]="errorOf('listCoverImagePath')"
+          (filesSelected)="onListCoverSelected($event)"
+        >
+          @if (listCoverImageUrl(); as url) {
+            <img class="post-form__cover-preview" [src]="url" alt="" />
+          }
+        </ad-file-picker>
+      </ad-form-section>
+    </ng-template>
+
+    <ng-template adWizardStep="media">
+      <ad-form-section [heading]="texts().documents">
+        <ad-file-picker
+          [label]="texts().addFile"
+          [accept]="mediaAccept.document"
+          [busy]="mediaUploading() === 'document'"
+          (filesSelected)="onFilesSelected('document', $event)"
+        />
+        <ad-media-list
+          [items]="documentItems()"
+          toggleable
+          (activeChange)="onItemActiveChanged('document', $event)"
+          (removed)="onItemRemoved('document', $event)"
+          (moved)="onItemMoved('document', $event)"
+        />
+      </ad-form-section>
+
+      <ad-form-section [heading]="texts().images">
+        <ad-file-picker
+          [label]="texts().addFile"
+          [accept]="mediaAccept.image"
+          [busy]="mediaUploading() === 'image'"
+          (filesSelected)="onFilesSelected('image', $event)"
+        />
+        <ad-media-list
+          [items]="imageItems()"
+          toggleable
+          (activeChange)="onItemActiveChanged('image', $event)"
+          (removed)="onItemRemoved('image', $event)"
+          (moved)="onItemMoved('image', $event)"
+        />
+      </ad-form-section>
+
+      <ad-form-section [heading]="texts().videos">
+        <ad-file-picker
+          [label]="texts().addFile"
+          [accept]="mediaAccept.video"
+          [busy]="mediaUploading() === 'video'"
+          (filesSelected)="onFilesSelected('video', $event)"
+        />
+        <ad-media-list
+          [items]="videoItems()"
+          toggleable
+          (activeChange)="onItemActiveChanged('video', $event)"
+          (removed)="onItemRemoved('video', $event)"
+          (moved)="onItemMoved('video', $event)"
+        />
+      </ad-form-section>
+
+      <ad-form-section [heading]="texts().audios">
+        <ad-file-picker
+          [label]="texts().addFile"
+          [accept]="mediaAccept.audio"
+          [busy]="mediaUploading() === 'audio'"
+          (filesSelected)="onFilesSelected('audio', $event)"
+        />
+        <ad-media-list
+          [items]="audioItems()"
+          toggleable
+          (activeChange)="onItemActiveChanged('audio', $event)"
+          (removed)="onItemRemoved('audio', $event)"
+          (moved)="onItemMoved('audio', $event)"
+        />
+      </ad-form-section>
+    </ng-template>
+  </ad-wizard>
+</form>
+
+<ad-devlog-resource-item-dialog [(open)]="resourceDialogOpen" (saved)="onResourceSaved($event)" />
+
+<ad-confirm-dialog
+  [heading]="texts().unsavedChangesHeading"
+  [confirmLabel]="texts().unsavedChangesConfirm"
+  [cancelLabel]="texts().unsavedChangesCancel"
+  tone="danger"
+  [open]="confirmLeaveOpen()"
+  (openChange)="onLeaveDialogOpenChange($event)"
+  (confirmed)="confirmLeave()"
+>
+  {{ texts().unsavedChangesMessage }}
+</ad-confirm-dialog>

@@ -1,0 +1,42 @@
+:root {
+  --radius: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-pill: 999px;
+  --border-width: 1px;
+  --border-width-strong: 1.5px;
+  --border-width-thick: 3px;
+  --header-height: var(--space-16);
+  --container-max: 72rem;
+  --logo-height: var(--space-12);
+  --icon-size: var(--space-5);
+  --control-size: var(--space-10);
+  --nav-mega-rail-width: 16.5rem;
+  --nav-mega-min-height: 20rem;
+  --nav-mega-photo-size: 9.5rem;
+  --nav-mega-period-width: 7rem;
+  --ad-search-width: 22rem;
+  --carousel-slide-max: 66rem;
+  --carousel-slide-height: 30rem;
+  --carousel-slide-height-md: 26rem;
+  --hero-art-size: 22rem;
+  --page-header-art-size: 13rem;
+  --page-header-art-size-md: 22rem;
+  --action-card-min-height: 10rem;
+  --media-card-min-height: 17rem;
+  --bento-tile-min-height: 14rem;
+  --bento-feature-min-height: 22rem;
+  --shadow-popover: 0 var(--space-3) var(--space-8) var(--color-popover-shadow);
+  --shadow-card:
+    inset 0 1px 0 var(--color-card-highlight),
+    0 var(--space-2) var(--space-4) var(--color-card-shadow);
+
+  --z-popover: 5;
+  --z-header: 10;
+  --z-menu: 20;
+  --z-dialog: 30;
+  --z-toast: 40;
+  --z-tooltip: 50;
+  --z-loading-bar: 60;
+}

@@ -1,0 +1,102 @@
+<div class="ad-login">
+  <div class="ad-login__art">
+    <img class="ad-login__pattern" [src]="pattern()" alt="" />
+    <button class="ad-login__logo-button" (click)="goToHome()" type="button" aria-label="Go to home">
+      <img class="ad-login__logo" [src]="logo()" alt="" width="120" height="85" />
+    </button>
+    <div class="ad-login__title">
+      <h2>
+        <span class="ad-login__title-soft">{{ texts().brandTitle.soft }}</span>
+        <span>{{ texts().brandTitle.strong }}<b class="ad-login__title-dot">.</b></span>
+      </h2>
+    </div>
+  </div>
+
+  <div class="ad-login__side">
+    <div class="ad-login__top">
+      <pb-language-switch />
+      <pb-theme-toggle />
+    </div>
+
+    <div class="ad-login__body">
+      @if (step() === 'credentials') {
+        <div class="ad-login__intro">
+          <span class="ad-login__eyebrow">{{ texts().credentials.eyebrow }}</span>
+          <h3>{{ texts().credentials.title }}</h3>
+          <p class="ad-login__muted">{{ texts().credentials.subtitle }}</p>
+        </div>
+
+        <form class="ad-login__form" novalidate [formGroup]="credentialsForm" (ngSubmit)="submitCredentials()">
+          <ad-text-field
+            [label]="texts().credentials.email"
+            [placeholder]="texts().credentials.emailPlaceholder"
+            type="email"
+            autocomplete="username"
+            required
+            formControlName="email"
+            [error]="errorOf('email')"
+          />
+
+          <ad-text-field
+            [label]="texts().credentials.password"
+            [placeholder]="texts().credentials.passwordPlaceholder"
+            type="password"
+            autocomplete="current-password"
+            required
+            formControlName="password"
+            [error]="errorOf('password')"
+          />
+
+          <ad-button type="submit" block [disabled]="submitting()">
+            {{ submitting() ? texts().credentials.submitting : texts().credentials.submit }}
+          </ad-button>
+        </form>
+      } @else {
+        <div class="ad-login__intro">
+          <span class="ad-login__eyebrow">{{ texts().otp.eyebrow }}</span>
+          <h3>{{ texts().otp.title }}</h3>
+          <p class="ad-login__muted">{{ texts().otp.subtitle(credentialsForm.controls.email.value) }}</p>
+        </div>
+
+        <form class="ad-login__form" novalidate [formGroup]="credentialsForm" (ngSubmit)="submitOtp()">
+          <ad-text-field
+            [label]="texts().otp.code"
+            [placeholder]="texts().otp.codePlaceholder"
+            type="text"
+            autocomplete="one-time-code"
+            required
+            [formControl]="otpControl"
+            [error]="otpError()"
+          />
+
+          <ad-button type="submit" block [disabled]="submitting()">
+            {{ submitting() ? texts().otp.submitting : texts().otp.submit }}
+          </ad-button>
+
+          <div class="ad-login__otp-actions">
+            <ad-button variant="tertiary" type="button" [disabled]="resending()" (click)="resendCode()">
+              {{ resending() ? texts().otp.resending : texts().otp.resend }}
+            </ad-button>
+            <ad-button variant="tertiary" type="button" (click)="backToCredentials()">
+              {{ texts().otp.back }}
+            </ad-button>
+          </div>
+        </form>
+      }
+    </div>
+
+    <p class="ad-login__footer">{{ texts().footer }}</p>
+  </div>
+</div>
+
+<ad-toast-stack />
+
+<ad-confirm-dialog
+  [(open)]="sessionExpired.open"
+  [heading]="texts().sessionExpired.heading"
+  [confirmLabel]="texts().sessionExpired.confirm"
+  cancelLabel=""
+  (confirmed)="sessionExpired.dismiss()"
+>
+  {{ texts().sessionExpired.message }}
+</ad-confirm-dialog>

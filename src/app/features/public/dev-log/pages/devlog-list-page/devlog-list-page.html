@@ -1,0 +1,87 @@
+<pb-page-header
+  [heading]="t().devLog.heading"
+  [description]="t().devLog.description"
+  [breadcrumbs]="breadcrumbs()"
+  icon="code"
+/>
+
+<section class="container devlog-list-page">
+  @if (loading()) {
+    <div class="devlog-list-page__skeleton-hero">
+      <pb-skeleton height="100%" radius="var(--radius-2xl)" />
+    </div>
+
+    <div class="devlog-list-page__skeleton-label">
+      <pb-skeleton width="10rem" height="0.85em" />
+    </div>
+
+    <div class="devlog-list-page__split">
+      <div class="devlog-list-page__skeleton-filters">
+        <pb-skeleton height="2.5rem" radius="var(--radius-lg)" />
+        <pb-skeleton width="6rem" height="0.75em" />
+        <pb-skeleton height="2.2rem" />
+        <pb-skeleton height="2.2rem" width="90%" />
+        <pb-skeleton height="2.2rem" width="80%" />
+      </div>
+
+      <ul class="devlog-list-page__grid">
+        @for (card of skeletonCards; track card) {
+          <li class="devlog-list-page__skeleton-card">
+            <pb-skeleton aspectRatio="16 / 10" radius="var(--radius-xl)" />
+            <pb-skeleton width="40%" height="0.75em" />
+            <pb-skeleton width="90%" height="1.1em" />
+            <pb-skeleton width="70%" height="0.85em" />
+          </li>
+        }
+      </ul>
+    </div>
+  } @else {
+    @if (featuredEntry(); as featured) {
+      <pb-devlog-hero
+        [title]="featured.title"
+        [description]="featured.description"
+        [date]="featured.date"
+        [coverUrl]="featured.coverUrl"
+        [path]="featured.path"
+      />
+    }
+
+    <h2 class="devlog-list-page__section-label">{{ t().devLog.previous }}</h2>
+
+    <div class="devlog-list-page__split">
+      <pb-devlog-filters
+        [categories]="filterCategories()"
+        [total]="previousTotalRecords()"
+        [(selectedId)]="selectedCategoryId"
+        [(searchTerm)]="searchTerm"
+      />
+
+      <div class="devlog-list-page__cards">
+        @if (previousEntries().length > 0) {
+          <ul class="devlog-list-page__grid">
+            @for (entry of previousEntries(); track entry.id) {
+              <li>
+                <pb-devlog-card
+                  [title]="entry.title"
+                  [description]="entry.description"
+                  [date]="entry.date"
+                  [coverUrl]="entry.coverUrl"
+                  [category]="entry.category"
+                  [path]="entry.path"
+                />
+              </li>
+            }
+          </ul>
+
+          @if (previousTotalPages() > 1) {
+            <div class="devlog-list-page__pagination">
+              <pb-paginator [total]="previousTotalPages()" [(index)]="previousPage" />
+            </div>
+          }
+        } @else {
+          <pb-empty-state [heading]="t().devLog.empty.title" [description]="t().devLog.empty.description" />
+        }
+      </div>
+    </div>
+  }
+</section>

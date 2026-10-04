@@ -1,0 +1,11 @@
+<article class="pb-project-card">
+  <div [class]="'pb-project-card__media pb-project-card__media--' + category()">
+    <span class="pb-project-card__placeholder">{{ imageLabel() }}</span>
+  </div>
+
+  <div class="pb-project-card__body">
+    <p class="pb-project-card__category">{{ categoryLabel() }}</p>
+    <h2 class="pb-project-card__title">{{ heading() }}</h2>
+    <p class="pb-project-card__description">{{ description() }}</p>
+  </div>
+</article>

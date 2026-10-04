@@ -1,0 +1,3 @@
+export const AD_TOAST_DURATION = 4000;
+
+export const AD_TOAST_ERROR_DURATION = 7000;

@@ -1,0 +1,142 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.ad-table {
+  &__level {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  &__scroll {
+    overflow-x: auto;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+  }
+
+  &__caption {
+    @include visually-hidden;
+  }
+
+  th,
+  td {
+    padding: var(--space-3);
+    text-align: start;
+    vertical-align: middle;
+
+    &.is-end {
+      text-align: end;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  th {
+    border-bottom: var(--border-width) solid var(--color-text-subtle);
+    color: var(--color-text-muted);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  td {
+    border-bottom: var(--border-width) solid var(--color-border);
+  }
+
+  tbody tr:not(.ad-table__children):hover td {
+    background-color: var(--color-surface);
+  }
+
+  tbody tr.is-selected td {
+    background-color: var(--color-tone-soft);
+  }
+
+  &__select {
+    width: var(--space-12);
+  }
+
+  &__menu {
+    width: var(--space-12);
+    padding-inline-end: 0;
+  }
+
+  &__expand {
+    width: var(--space-10);
+    padding-inline-end: 0;
+  }
+
+  &__toggle {
+    @include reset-button;
+    --icon-size: var(--space-5);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    @include focus-ring;
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+
+  &__children > td {
+    padding: var(--space-4) 0 var(--space-4) var(--space-6);
+    border-inline-start: var(--border-width-thick) solid var(--color-accent);
+  }
+
+  &__loading {
+    margin: 0;
+    padding: var(--space-3);
+    color: var(--color-text-muted);
+  }
+
+  &__columns-hint {
+    margin: 0 0 var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  &__actions {
+    width: 1%;
+    white-space: nowrap;
+  }
+
+  &__sort {
+    @include reset-button;
+    --icon-size: var(--space-4);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    @include focus-ring;
+
+    &:hover {
+      color: var(--color-text);
+    }
+  }
+
+  &__empty {
+    padding-block: var(--space-8);
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+}
+
+.ad-table__head {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}

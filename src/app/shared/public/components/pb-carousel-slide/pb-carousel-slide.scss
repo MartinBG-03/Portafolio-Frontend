@@ -1,0 +1,6 @@
+:host {
+  display: block;
+  flex: 0 0 min(100%, var(--carousel-slide-max));
+  min-width: 0;
+  scroll-snap-align: center;
+}

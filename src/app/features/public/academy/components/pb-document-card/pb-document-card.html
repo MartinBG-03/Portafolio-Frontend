@@ -1,0 +1,17 @@
+<article class="pb-document-card">
+  <div class="pb-document-card__cover" aria-hidden="true">
+    <span class="pb-document-card__sheet"></span>
+    <span class="pb-document-card__badge">PDF</span>
+  </div>
+
+  <div class="pb-document-card__body">
+    <p class="pb-document-card__meta">{{ meta() }}</p>
+    <h3 class="pb-document-card__title">{{ heading() }}</h3>
+    <p class="pb-document-card__description">{{ description() }}</p>
+
+    <a class="pb-document-card__action" [attr.href]="href()" download>
+      {{ downloadLabel() }}
+      <app-icon name="download" />
+    </a>
+  </div>
+</article>

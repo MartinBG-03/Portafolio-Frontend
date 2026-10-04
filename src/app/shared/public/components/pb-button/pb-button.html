@@ -1,0 +1,38 @@
+<ng-template #content><ng-content /></ng-template>
+
+@if (link() !== undefined) {
+  <a
+    [class]="controlClass()"
+    [class.is-disabled]="disabled()"
+    [routerLink]="link()"
+    [queryParams]="queryParams()"
+    [attr.aria-disabled]="disabled() ? 'true' : null"
+    [attr.tabindex]="disabled() ? -1 : null"
+    (click)="onLinkClick($event)"
+  >
+    <ng-container [ngTemplateOutlet]="content" />
+  </a>
+} @else if (href() !== undefined) {
+  <a
+    [class]="controlClass()"
+    [class.is-disabled]="disabled()"
+    [attr.href]="href()"
+    [attr.download]="download() ? '' : null"
+    [attr.target]="target() ?? null"
+    [attr.rel]="target() === '_blank' ? 'noopener noreferrer' : null"
+    [attr.aria-disabled]="disabled() ? 'true' : null"
+    [attr.tabindex]="disabled() ? -1 : null"
+    (click)="onLinkClick($event)"
+  >
+    <ng-container [ngTemplateOutlet]="content" />
+  </a>
+} @else {
+  <button
+    [class]="controlClass()"
+    [type]="type()"
+    [disabled]="disabled()"
+    [attr.aria-expanded]="expanded()"
+  >
+    <ng-container [ngTemplateOutlet]="content" />
+  </button>
+}

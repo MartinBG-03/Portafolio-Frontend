@@ -1,0 +1,14 @@
+<div [class]="alertClass()" [attr.role]="role()">
+  <ad-icon class="ad-alert__icon" [name]="icon()" />
+
+  <div class="ad-alert__body">
+    <strong class="ad-alert__heading">{{ heading() }}</strong>
+    <p class="ad-alert__description"><ng-content /></p>
+  </div>
+
+  @if (dismissible()) {
+    <ad-icon-button variant="ghost" size="sm" [label]="dismissText()" (click)="dismissed.emit()">
+      <ad-icon name="close" />
+    </ad-icon-button>
+  }
+</div>

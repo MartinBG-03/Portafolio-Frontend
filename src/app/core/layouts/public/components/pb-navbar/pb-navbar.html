@@ -1,0 +1,43 @@
+<nav class="pb-navbar" [attr.aria-label]="label()">
+  <ul id="pb-navbar-list" class="pb-navbar__list" [class.is-open]="mobileOpen()">
+    @for (item of items(); track item.id) {
+      <li class="pb-navbar__item" (focusout)="onFocusOut($event, item.id)">
+        @if (item.menu; as menu) {
+          <button
+            type="button"
+            class="pb-navbar__link pb-navbar__trigger"
+            [class.is-active]="isActive(item.path)"
+            [class.is-open]="openMenuId() === item.id"
+            [attr.aria-expanded]="openMenuId() === item.id"
+            [attr.aria-controls]="panelId(item.id)"
+            (click)="toggleMenu(item.id)"
+          >
+            {{ item.label }}
+            <app-icon
+              class="pb-navbar__chevron"
+              [name]="openMenuId() === item.id ? 'arrow-up' : 'arrow-down'"
+            />
+          </button>
+
+          @if (openMenuId() === item.id) {
+            <pb-nav-mega-menu
+              class="pb-navbar__panel"
+              [panelId]="panelId(item.id)"
+              [menu]="menu"
+              (navigated)="closeAll()"
+            />
+          }
+        } @else {
+          <a
+            class="pb-navbar__link"
+            [routerLink]="item.path"
+            routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+          >
+            {{ item.label }}
+          </a>
+        }
+      </li>
+    }
+  </ul>
+</nav>

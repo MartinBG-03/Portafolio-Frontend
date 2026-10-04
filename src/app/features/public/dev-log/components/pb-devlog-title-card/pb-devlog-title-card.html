@@ -1,0 +1,112 @@
+<header class="pb-devlog-title-card__header">
+  @if (formattedDate(); as date) {
+    <time class="pb-devlog-title-card__date" [attr.datetime]="isoDate()">{{ date }}</time>
+  }
+
+  <span class="pb-devlog-title-card__rule" aria-hidden="true"></span>
+
+  @if (visibleCategories().length > 0) {
+    <div class="pb-devlog-title-card__category">
+      @if (categoryPages() > 1) {
+        <button
+          type="button"
+          class="pb-devlog-title-card__cat-nav"
+          [attr.aria-label]="texts().previousCategory"
+          [disabled]="isFirstCategoryPage()"
+          (click)="previousCategoryPage()"
+        >
+          <app-icon name="chevron-left" />
+        </button>
+      }
+
+      <ul class="pb-devlog-title-card__cat-list">
+        @for (category of visibleCategories(); track category.id) {
+          <li class="pb-devlog-title-card__cat-chip">{{ category.label }}</li>
+        }
+      </ul>
+
+      @if (categoryPages() > 1) {
+        <button
+          type="button"
+          class="pb-devlog-title-card__cat-nav"
+          [attr.aria-label]="texts().nextCategory"
+          [disabled]="isLastCategoryPage()"
+          (click)="nextCategoryPage()"
+        >
+          <app-icon name="chevron-right" />
+        </button>
+      }
+    </div>
+  }
+</header>
+
+<article
+  #card
+  class="pb-devlog-title-card"
+  [class.pb-devlog-title-card--actions-left]="buttonsPosition() === 'left'"
+  [attr.aria-label]="title()"
+>
+  @if (shapePath(); as path) {
+    <svg
+      class="pb-devlog-title-card__shape"
+      aria-hidden="true"
+      [attr.width]="size().width"
+      [attr.height]="size().height"
+      [attr.viewBox]="viewBox()"
+    >
+      @if (coverImageUrl(); as url) {
+        <defs>
+          <pattern
+            [attr.id]="patternId"
+            patternUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            [attr.width]="size().width"
+            [attr.height]="size().height"
+          >
+            <image
+              [attr.href]="url"
+              x="0"
+              y="0"
+              [attr.width]="size().width"
+              [attr.height]="size().height"
+              preserveAspectRatio="xMidYMid slice"
+            />
+          </pattern>
+        </defs>
+        <path class="pb-devlog-title-card__surface" [attr.d]="path" />
+        <path [attr.d]="path" [attr.fill]="'url(#' + patternId + ')'" />
+      } @else {
+        <path class="pb-devlog-title-card__surface" [attr.d]="path" />
+      }
+    </svg>
+  }
+
+  <div #actions class="pb-devlog-title-card__actions">
+    <button
+      type="button"
+      class="pb-devlog-title-card__action pb-devlog-title-card__action--pending"
+      [attr.aria-label]="texts().comingSoon"
+    >
+      <app-icon name="download" />
+    </button>
+
+    <button
+      type="button"
+      class="pb-devlog-title-card__action pb-devlog-title-card__action--share"
+      [class.pb-devlog-title-card__action--disabled]="!shareUrl()"
+      [attr.aria-label]="shareUrl() ? texts().share : texts().shareUnavailable"
+      (click)="onShare()"
+    >
+      <app-icon name="share" />
+    </button>
+
+    <button
+      type="button"
+      class="pb-devlog-title-card__action pb-devlog-title-card__action--pending"
+      [attr.aria-label]="texts().comingSoon"
+    >
+      <app-icon name="dots" />
+    </button>
+  </div>
+</article>

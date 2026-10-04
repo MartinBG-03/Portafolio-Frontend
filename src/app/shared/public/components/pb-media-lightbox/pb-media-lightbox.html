@@ -1,0 +1,32 @@
+@if (open() && current(); as item) {
+  <div class="pb-media-lightbox" role="dialog" aria-modal="true" [attr.aria-label]="texts().viewer">
+    <button
+      #closeButton
+      type="button"
+      class="pb-media-lightbox__close"
+      [attr.aria-label]="texts().close"
+      (click)="close()"
+    >
+      <app-icon name="close" />
+    </button>
+
+    <div class="pb-media-lightbox__stage">
+      @if (item.kind === 'video') {
+        <pb-video-player [src]="item.src" [poster]="item.poster ?? null" [label]="item.title" />
+      } @else {
+        <img class="pb-media-lightbox__image" [src]="item.src" [alt]="item.title" />
+      }
+    </div>
+
+    <div class="pb-media-lightbox__meta">
+      <div class="pb-media-lightbox__caption">
+        <h2 class="pb-media-lightbox__title">{{ item.title }}</h2>
+        @if (item.body) {
+          <p class="pb-media-lightbox__body">{{ item.body }}</p>
+        }
+      </div>
+
+      <pb-paginator onMedia [total]="items().length" [(index)]="index" />
+    </div>
+  </div>
+}

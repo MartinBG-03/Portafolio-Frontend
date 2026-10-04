@@ -1,0 +1,11 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.pb-text-field {
+  &__control {
+    @include field-control;
+  }
+}

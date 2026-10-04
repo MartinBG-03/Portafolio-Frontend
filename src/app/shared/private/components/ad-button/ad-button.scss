@@ -1,0 +1,88 @@
+@use 'abstracts' as *;
+
+:host {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+:host(.is-block) {
+  display: block;
+  width: 100%;
+}
+
+.ad-button {
+  @include reset-button;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--control-size);
+  padding-inline: var(--space-5);
+  border: var(--border-width) solid transparent;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+  @include focus-ring;
+
+  &--sm {
+    --icon-size: var(--space-4);
+
+    height: var(--space-8);
+    padding-inline: var(--space-4);
+    font-size: var(--font-size-xs);
+  }
+
+  &--primary {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+
+    &:hover {
+      background-color: var(--color-primary-hover);
+    }
+  }
+
+  &--secondary {
+    border-color: var(--color-border);
+    background-color: var(--color-card);
+    color: var(--color-text);
+
+    &:hover {
+      border-color: var(--color-text-muted);
+    }
+  }
+
+  &--tertiary {
+    padding-inline: var(--space-3);
+    background-color: transparent;
+    color: var(--color-text);
+
+    &:hover {
+      background-color: var(--color-surface);
+    }
+  }
+
+  &--danger {
+    background-color: var(--color-danger);
+    color: var(--color-on-danger);
+
+    &:hover {
+      background-color: var(--color-danger-hover);
+    }
+  }
+
+  &:disabled {
+    border-color: transparent;
+    background-color: var(--color-disabled-bg);
+    color: var(--color-disabled-text);
+    cursor: not-allowed;
+  }
+
+  &--tertiary:disabled {
+    background-color: transparent;
+  }
+
+  &--block {
+    width: 100%;
+  }
+}

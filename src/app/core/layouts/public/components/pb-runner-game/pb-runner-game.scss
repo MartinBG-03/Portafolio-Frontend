@@ -1,0 +1,174 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.pb-runner-game {
+  &__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+    margin-block-end: var(--space-3);
+  }
+
+  &__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+  }
+
+  &__themes {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  &__styles {
+    display: inline-flex;
+    border: var(--border-width) solid var(--footer-border, var(--color-border));
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+  }
+
+  &__style-btn {
+    padding: var(--space-1) var(--space-3);
+    border: 0;
+    background: transparent;
+    color: var(--footer-text-muted, var(--color-text-muted));
+    font: inherit;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    outline-offset: -2px;
+
+    &--active {
+      background: var(--footer-text, var(--color-text));
+      color: var(--footer-bg, var(--color-surface));
+    }
+  }
+
+  &__theme-btn {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    border: var(--border-width) solid transparent;
+    padding: 0;
+    cursor: pointer;
+    background: var(--swatch);
+    outline-offset: 2px;
+
+    &--city {
+      --swatch: var(--color-accent);
+    }
+
+    &--forest {
+      --swatch: light-dark(#d98f2b, #f2c14e);
+    }
+
+    &--construction {
+      --swatch: light-dark(#ff7a00, #f2c14e);
+    }
+
+    &--active {
+      border-color: var(--color-text);
+    }
+  }
+
+  &__zoom {
+    display: inline-flex;
+    align-items: center;
+    border: var(--border-width) solid var(--footer-border, var(--color-border));
+    border-radius: var(--radius-pill);
+  }
+
+  &__zoom-btn {
+    width: 1.75rem;
+    height: 1.75rem;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--footer-text, var(--color-text));
+    font: inherit;
+    font-size: var(--font-size-md);
+    line-height: 1;
+    cursor: pointer;
+
+    &:disabled {
+      color: var(--footer-text-muted, var(--color-text-muted));
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  &__zoom-value {
+    min-width: 1.75rem;
+    color: var(--footer-text-muted, var(--color-text-muted));
+    font-size: var(--font-size-sm);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+
+  &__scores {
+    display: flex;
+    gap: var(--space-4);
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__best {
+    color: var(--color-text-subtle);
+  }
+
+  &__stage {
+    position: relative;
+  }
+
+  &__canvas {
+    display: block;
+    width: 100%;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+    @include focus-ring;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    margin: 0;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  &__headline {
+    color: var(--color-text);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-bold);
+  }
+
+  &__hint {
+    padding-inline: var(--space-4);
+    color: var(--color-text-muted);
+  }
+
+  &__baseline-ink {
+    display: none;
+    color: var(--color-separator);
+  }
+
+  &[data-game-theme='forest'] &__baseline-ink {
+    color: light-dark(#b9cdb0, #2a3f2a);
+  }
+
+  &[data-game-theme='construction'] &__baseline-ink {
+    color: light-dark(#ff7a00, #f2c14e);
+  }
+}

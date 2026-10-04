@@ -1,0 +1,7 @@
+@use 'abstracts' as *;
+
+.pb-rich-text {
+  display: block;
+
+  @include rich-text-content;
+}

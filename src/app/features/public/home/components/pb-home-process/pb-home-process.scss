@@ -1,0 +1,106 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.pb-home-process {
+  padding-block: var(--space-12);
+
+  @include media-up(md) {
+    padding-block: var(--space-16);
+  }
+
+  &__title {
+    margin: 0 0 var(--space-10);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  &__list {
+    @include reset-list;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+
+    @include media-up(sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media-up(md) {
+      grid-template-columns: repeat(4, 1fr);
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset-block-start: var(--space-10);
+        inset-inline: 12.5%;
+        border-block-start: 2px dotted color-mix(in srgb, var(--color-text) 35%, transparent);
+      }
+    }
+  }
+
+  &__step {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: var(--space-2);
+    text-align: center;
+  }
+
+  &__icon {
+    --icon-size: var(--space-12);
+
+    position: relative;
+    display: grid;
+    place-items: center;
+    inline-size: var(--space-20);
+    block-size: var(--space-20);
+    margin-block-end: var(--space-2);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset-inline-end: var(--space-3);
+      inset-block-end: var(--space-3);
+      inline-size: var(--space-6);
+      block-size: var(--space-6);
+      border-radius: 50%;
+      background-color: color-mix(in srgb, var(--color-accent) 75%, transparent);
+    }
+
+    @include media-up(md) {
+      --icon-size: var(--space-16);
+    }
+  }
+
+  &__glyph {
+    position: relative;
+  }
+
+  &__number {
+    margin: 0;
+    color: var(--color-accent-text);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  &__step-title {
+    margin: 0;
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.2;
+  }
+
+  &__description {
+    max-inline-size: 22ch;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+}

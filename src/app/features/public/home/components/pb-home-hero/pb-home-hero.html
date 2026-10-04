@@ -1,0 +1,57 @@
+<section class="pb-home-hero">
+  <pb-carousel [labels]="t().home.carousel">
+    <pb-carousel-slide>
+      <div class="pb-home-hero__slide pb-home-hero__slide--intro">
+        <div class="pb-home-hero__content">
+          <p class="pb-home-hero__availability">{{ t().home.availability }}</p>
+          <h1 class="pb-home-hero__title">
+            {{ t().home.titleStart }}
+            <span class="pb-home-hero__accent">{{ t().home.titleAccent }}</span>
+          </h1>
+          <p class="pb-home-hero__description">{{ t().home.subtitle }}</p>
+          <div class="pb-home-hero__actions">
+            <pb-button variant="media" pill link="/projects">
+              {{ t().home.actions.projects }}
+            </pb-button>
+            <pb-button variant="media-outline" pill [href]="cvHref()" download>
+              {{ t().home.actions.cv }}
+              <span class="pb-home-hero__circle"><app-icon name="download" /></span>
+            </pb-button>
+          </div>
+        </div>
+
+        <div class="pb-home-hero__art" aria-hidden="true">
+          <span class="pb-home-hero__ring"></span>
+          <span class="pb-home-hero__disk"></span>
+          <span class="pb-home-hero__dot"></span>
+        </div>
+      </div>
+    </pb-carousel-slide>
+
+    @for (project of projects(); track project.id) {
+      <pb-carousel-slide>
+        <div [class]="'pb-home-hero__slide pb-home-hero__slide--' + project.category">
+          <div class="pb-home-hero__content">
+            <p class="pb-home-hero__eyebrow">{{ project.categoryLabel }}</p>
+            <h2 class="pb-home-hero__title">{{ project.title }}</h2>
+            <p class="pb-home-hero__description">{{ project.description }}</p>
+            <div class="pb-home-hero__actions">
+              <pb-button
+                variant="media"
+                pill
+                link="/projects"
+                [queryParams]="{ category: project.category }"
+              >
+                {{ t().home.carousel.viewProject }}
+              </pb-button>
+            </div>
+          </div>
+
+          <p class="pb-home-hero__placeholder" aria-hidden="true">
+            {{ t().projects.imagePlaceholder }}
+          </p>
+        </div>
+      </pb-carousel-slide>
+    }
+  </pb-carousel>
+</section>

@@ -1,0 +1,22 @@
+<article class="pb-devlog-card">
+  <a class="pb-devlog-card__media" [routerLink]="path()">
+    @if (coverUrl(); as url) {
+      <img [src]="url" alt="" />
+    }
+  </a>
+
+  <div class="pb-devlog-card__body">
+    <div class="pb-devlog-card__meta">
+      <time>{{ formattedDate() }}</time>
+      @if (category(); as label) {
+        <span class="pb-devlog-card__tag">{{ label }}</span>
+      }
+    </div>
+    <h3><a [routerLink]="path()">{{ title() }}</a></h3>
+    <p>{{ description() }}</p>
+    <a class="pb-devlog-card__more" [routerLink]="path()">
+      {{ texts().readMore }}
+      <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</article>
